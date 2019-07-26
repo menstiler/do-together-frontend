@@ -15,9 +15,7 @@ export default class MainContainer extends React.Component {
     selectedEvent: 1,
     currentUser: {
       "id": 1,
-      "name": "Romeo Leannon",
-      "created_at": "2019-07-25T20:57:36.292Z",
-      "updated_at": "2019-07-25T20:57:36.292Z"
+      "name": "Donnell Ankunding",
       }
   }
 
@@ -102,7 +100,6 @@ export default class MainContainer extends React.Component {
         return group
       }
     })
-    debugger
     this.setState({
       groups: updatedGroups
     })
@@ -116,6 +113,67 @@ export default class MainContainer extends React.Component {
     })
   }
 
+  removeGroup = (group_id) => {
+    this.setState({
+      selectedGroup: null
+    }, () => {
+      fetch(`http://localhost:3000/groups/${group_id}`, {
+        method: "DELETE"
+      })
+      let updatedGroups = [...this.state.groups].map(group => {
+        if (group.id !== group_id) {
+          return group
+        }
+      }).filter(function( element ) {
+        return element !== undefined;
+      })
+      this.setState({
+        groups: updatedGroups,
+      })
+    })
+  }
+
+  removeDuplicates = (myArr, prop) => {
+    return myArr.filter((obj, pos, arr) => {
+        return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
+    })
+  }
+
+  addUsersToGroup = (event, group_id, users) => {
+    event.preventDefault()
+    users.forEach(user => {
+      fetch('http://localhost:3000/user_groups', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          user_group: {
+            user_id: user.id,
+            group_id: group_id
+          }
+        })
+      })
+      .then(resp => resp.json())
+      .then(json => {
+        debugger
+        let updatedGroups = this.state.groups.map(group => {
+          if (group.id === group_id) {
+            group.users.push(user)
+            return group
+            console.log(group)
+          } else {
+            return group
+          }
+        })
+        this.setState({
+          groups: updatedGroups
+        })
+     })
+    })
+  }
+
   renderContainer = () => {
     if (this.state.selectedGroup !== null) {
       return (
@@ -124,7 +182,10 @@ export default class MainContainer extends React.Component {
         selectedGroup={this.state.groups.find(group => group.id === this.state.selectedGroup)}
         handleClick={this.selectEvent}
         currentUser={this.state.currentUser}
-        removeUser={this.removeUser} />
+        removeUser={this.removeUser}
+        removeGroup={this.removeGroup}
+        users={this.removeDuplicates(this.state.groups.map(group => group.users).flat(), "name")}
+        addUsersToGroup={this.addUsersToGroup} />
       )
     } else {
       if (this.state.toggleView === 'group') {

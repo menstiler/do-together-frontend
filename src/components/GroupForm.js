@@ -21,7 +21,10 @@ export default class GroupForm extends React.Component {
         "Accept": "application/json"
       },
       body: JSON.stringify({
-        name: this.state.name,
+        group: {
+          name: this.state.name,
+          creator: this.props.currentUser.id
+        }
       })
     })
     .then(resp => resp.json())

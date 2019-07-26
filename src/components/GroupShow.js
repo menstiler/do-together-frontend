@@ -1,13 +1,13 @@
 import React from 'react'
 import EventList from '../containers/EventList'
+import AddUsers from '../components/AddUsers'
 
 export default class GroupShow extends React.Component {
 
-  render() {
-    const { name, users, activities, events, id } = this.props.selectedGroup
 
-    console.log(users)
-    debugger
+  render() {
+    const { name, users, activities, events, id, creator } = this.props.selectedGroup
+
     return (
       <div>
         <h2>{name}</h2>
@@ -19,6 +19,13 @@ export default class GroupShow extends React.Component {
           :
           < button onClick={() => this.props.addUser(this.props.currentUser.id, id)}>Join Group</button>
         }
+        {
+          this.props.currentUser.id === parseInt(creator)
+          ?
+          < button onClick={() => this.props.removeGroup(id)}>Delete Group</button>
+          :
+          null
+        }
         </div>
         <div>
           <h3>Events</h3>
@@ -29,6 +36,18 @@ export default class GroupShow extends React.Component {
           {users.map(user => {
               return <p>{user.name}</p>
             })}
+          {
+            users.map(user => user.id).includes(this.props.currentUser.id) ?
+            <div>
+              <h3>Add users</h3>
+              <AddUsers
+              users={this.props.users.filter(new_user => !users.map(user => user.id).includes(new_user.id))}
+              addUsersToGroup={this.props.addUsersToGroup}
+              selectedGroup={id}/>
+            </div>
+            :
+            null
+          }
         </div>
       </div>
     )
