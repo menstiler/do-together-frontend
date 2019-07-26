@@ -6,6 +6,7 @@ function NavBar() {
       <button>Home</button>
       <button>Profile</button>
       <button>Logout</button>
+      <button>Create New Group</button>
     </div>
   )
 }
