@@ -17,10 +17,10 @@ export default class GroupShow extends React.Component {
           ?
           < button onClick={() => this.props.removeUser(this.props.currentUser.id, id)}>Leave Group</button>
           :
-          < button onClick={() => this.props.addUser(this.props.currentUser.id, id)}>Join Group</button>
+          < button onClick={() => this.props.addUser(this.props.currentUser, id)}>Join Group</button>
         }
         {
-          this.props.currentUser.id === parseInt(creator)
+          this.props.currentUser.id === parseInt(creator) && users.map(user => user.id).includes(this.props.currentUser.id)
           ?
           < button onClick={() => this.props.removeGroup(id)}>Delete Group</button>
           :

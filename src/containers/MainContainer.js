@@ -13,10 +13,6 @@ export default class MainContainer extends React.Component {
     toggleView: 'group',
     selectedGroup: null,
     selectedEvent: 1,
-    currentUser: {
-      "id": 1,
-      "name": "Donnell Ankunding",
-      }
   }
 
   componentDidMount() {
@@ -55,7 +51,8 @@ export default class MainContainer extends React.Component {
     })
   }
 
-  addUser = (user_id, group_id) => {
+  addUser = (user, group_id) => {
+    debugger
     fetch('http://localhost:3000/user_groups', {
       method: "POST",
       headers: {
@@ -64,7 +61,7 @@ export default class MainContainer extends React.Component {
       },
       body: JSON.stringify({
         user_group: {
-          user_id: user_id,
+          user_id: user.id,
           group_id: group_id
         }
       })
@@ -73,7 +70,7 @@ export default class MainContainer extends React.Component {
     .then(json => {
       let updatedGroups = this.state.groups.map(group => {
         if (group.id === group_id) {
-          group.users.push(this.state.currentUser)
+          group.users.push(user)
           return group
           console.log(group)
         } else {
@@ -92,7 +89,7 @@ export default class MainContainer extends React.Component {
     })
     let updatedGroups = this.state.groups.map(group => {
       if (group.id === group_id) {
-        let userIndex = group.users.indexOf(this.state.currentUser)
+        let userIndex = group.users.indexOf(this.props.currentUser)
         group.users.splice(userIndex, 1)
         return group
         console.log(group)
@@ -142,49 +139,23 @@ export default class MainContainer extends React.Component {
   addUsersToGroup = (event, group_id, users) => {
     event.preventDefault()
     users.forEach(user => {
-      fetch('http://localhost:3000/user_groups', {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify({
-          user_group: {
-            user_id: user.id,
-            group_id: group_id
-          }
-        })
-      })
-      .then(resp => resp.json())
-      .then(json => {
-        debugger
-        let updatedGroups = this.state.groups.map(group => {
-          if (group.id === group_id) {
-            group.users.push(user)
-            return group
-            console.log(group)
-          } else {
-            return group
-          }
-        })
-        this.setState({
-          groups: updatedGroups
-        })
-     })
+      this.addUser(user, group_id)
     })
   }
 
+
   renderContainer = () => {
+    // debugger
     if (this.state.selectedGroup !== null) {
       return (
         < GroupShow
         addUser={this.addUser}
         selectedGroup={this.state.groups.find(group => group.id === this.state.selectedGroup)}
         handleClick={this.selectEvent}
-        currentUser={this.state.currentUser}
+        currentUser={this.props.currentUser}
         removeUser={this.removeUser}
         removeGroup={this.removeGroup}
-        users={this.removeDuplicates(this.state.groups.map(group => group.users).flat(), "name")}
+        users={this.removeDuplicates(this.state.groups.map(group => group.users).flat(), "id")}
         addUsersToGroup={this.addUsersToGroup} />
       )
     } else {
@@ -196,7 +167,8 @@ export default class MainContainer extends React.Component {
           </div>
         )
       } else if (this.state.toggleView === 'event') {
-        return < EventContainer events={this.state.groups.map(group => group.events).flat()} selectedGroup={this.state.selectedGroup} handleClick={this.selectEvent} selectedEvent={this.state.selectedEvent}/>
+        debugger;
+        return < EventContainer events={this.props.currentUser.events} selectedGroup={this.state.selectedGroup} handleClick={this.selectEvent} selectedEvent={this.state.selectedEvent}/>
       }
     }
   }
@@ -204,6 +176,7 @@ export default class MainContainer extends React.Component {
 
 
   render() {
+
     return (
       <div>
         < ControllerContainer
