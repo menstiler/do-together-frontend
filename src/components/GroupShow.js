@@ -1,6 +1,8 @@
 import React from 'react'
 import EventList from '../containers/EventList'
+import EventForm from './EventForm'
 import AddUsers from '../components/AddUsers'
+
 
 export default class GroupShow extends React.Component {
 
@@ -29,7 +31,7 @@ export default class GroupShow extends React.Component {
         </div>
         <div>
           <h3>Events</h3>
-          < EventList events={events} parent="groupShow" handleClick={this.props.handleClick} />
+          < EventList key={id} events={events} parent="groupShow" handleClick={this.props.handleClick} />
         </div>
         <div>
           <h3>Members</h3>
@@ -49,6 +51,10 @@ export default class GroupShow extends React.Component {
             null
           }
         </div>
+        <span>
+          <button onClick={this.props.changeToEventForm}>Create Event</button>
+        </span>
+        {this.props.newEvent ? < EventForm group_id={id} groups={this.props.groups} /> : null}
       </div>
     )
   }
