@@ -3,6 +3,7 @@ import ControllerContainer from './ControllerContainer'
 import GroupContainer from './GroupContainer'
 import EventContainer from './EventContainer'
 import GroupShow from '../components/GroupShow'
+import EventForm from '../components/EventForm'
 import GroupForm from '../components/GroupForm'
 
 const API = 'http://localhost:3000/groups'
@@ -13,6 +14,11 @@ export default class MainContainer extends React.Component {
     toggleView: 'group',
     selectedGroup: null,
     selectedEvent: 1,
+    newEvent: false,
+    currentUser: {
+      "id": 1,
+      "name": "Blaine Wilderman DVM",
+      }
   }
 
   componentDidMount() {
@@ -28,14 +34,16 @@ export default class MainContainer extends React.Component {
   changeToGroupView = () => {
     this.setState((prevState) => ({
       toggleView: 'group',
-      selectedGroup: null
+      selectedGroup: null,
+      newEvent: false
     }))
   }
 
   changeToEventView = () => {
     this.setState((prevState) => ({
       toggleView: 'event',
-      selectedGroup: null
+      selectedGroup: null,
+      newEvent: false
     }))
   }
 
@@ -51,8 +59,20 @@ export default class MainContainer extends React.Component {
     })
   }
 
+  changeToEventForm = () => {
+    this.setState({
+      newEvent: true
+    })
+  }
+
+
+  changeToEventForm = () => {
+    this.setState({
+      newEvent: true
+    })
+  }
+
   addUser = (user, group_id) => {
-    debugger
     fetch('http://localhost:3000/user_groups', {
       method: "POST",
       headers: {
@@ -89,7 +109,7 @@ export default class MainContainer extends React.Component {
     })
     let updatedGroups = this.state.groups.map(group => {
       if (group.id === group_id) {
-        let userIndex = group.users.indexOf(this.props.currentUser)
+        let userIndex = group.users.indexOf(this.state.currentUser)
         group.users.splice(userIndex, 1)
         return group
         console.log(group)
@@ -152,11 +172,14 @@ export default class MainContainer extends React.Component {
         addUser={this.addUser}
         selectedGroup={this.state.groups.find(group => group.id === this.state.selectedGroup)}
         handleClick={this.selectEvent}
-        currentUser={this.props.currentUser}
+        currentUser={this.state.currentUser}
         removeUser={this.removeUser}
         removeGroup={this.removeGroup}
         users={this.removeDuplicates(this.state.groups.map(group => group.users).flat(), "id")}
-        addUsersToGroup={this.addUsersToGroup} />
+        addUsersToGroup={this.addUsersToGroup}
+        changeToEventForm={this.changeToEventForm}
+        newEvent={this.state.newEvent}
+        groups={this.state.groups} />
       )
     } else {
       if (this.state.toggleView === 'group') {
