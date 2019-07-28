@@ -2,14 +2,24 @@ import React from 'react'
 import EventList from '../containers/EventList'
 import EventForm from './EventForm'
 import AddUsers from '../components/AddUsers'
-
+import EventShow from '../components/EventShow'
 
 export default class GroupShow extends React.Component {
 
+  state = {
+    selectedEvent: null,
+    showEvent: false
+  }
+
+  handleClick = (id) => {
+    this.setState({
+      selectedEvent: id,
+      showEvent: !this.state.showEvent
+    })
+  }
 
   render() {
     const { name, users, activities, events, id, creator } = this.props.selectedGroup
-
     return (
       <div>
         <h2>{name}</h2>
@@ -22,7 +32,7 @@ export default class GroupShow extends React.Component {
           < button onClick={() => this.props.addUser(this.props.currentUser.id, id)}>Join Group</button>
         }
         {
-          this.props.currentUser.id === parseInt(creator)
+          this.props.currentUser.id === parseInt(creator) && users.map(user => user.id).includes(this.props.currentUser.id)
           ?
           < button onClick={() => this.props.removeGroup(id)}>Delete Group</button>
           :
@@ -31,7 +41,10 @@ export default class GroupShow extends React.Component {
         </div>
         <div>
           <h3>Events</h3>
-          < EventList key={id} events={events} parent="groupShow" handleClick={this.props.handleClick} />
+          < EventList key={id} events={events} parent="groupShow" handleClick={this.handleClick} />
+          {
+            this.state.showEvent ? < EventShow parent="groupShow" selectedEvent={events.find(event => event.id === this.state.selectedEvent)}/> : null
+          }
         </div>
         <div>
           <h3>Members</h3>

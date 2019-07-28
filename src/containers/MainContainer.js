@@ -15,10 +15,10 @@ export default class MainContainer extends React.Component {
     selectedGroup: null,
     selectedEvent: 1,
     newEvent: false,
-    currentUser: {
-      "id": 1,
-      "name": "Donnell Ankunding",
-      }
+    // currentUser: {
+    //   "id": 1,
+    //   "name": "Donnell Ankunding",
+    //   }
   }
 
   componentDidMount() {
@@ -83,7 +83,7 @@ export default class MainContainer extends React.Component {
     .then(json => {
       let updatedGroups = this.state.groups.map(group => {
         if (group.id === group_id) {
-          group.users.push(this.state.currentUser)
+          group.users.push(this.props.currentUser)
           return group
           console.log(group)
         } else {
@@ -102,7 +102,7 @@ export default class MainContainer extends React.Component {
     })
     let updatedGroups = this.state.groups.map(group => {
       if (group.id === group_id) {
-        let userIndex = group.users.indexOf(this.state.currentUser)
+        let userIndex = group.users.indexOf(this.props.currentUser)
         group.users.splice(userIndex, 1)
         return group
         console.log(group)
@@ -190,22 +190,22 @@ export default class MainContainer extends React.Component {
         < GroupShow
         addUser={this.addUser}
         selectedGroup={this.state.groups.find(group => group.id === this.state.selectedGroup)}
-        handleClick={this.selectGroup}
-        currentUser={this.state.currentUser}
+        handleClick={this.selectEvent}
+        currentUser={this.props.currentUser}
         removeUser={this.removeUser}
         removeGroup={this.removeGroup}
         users={this.removeDuplicates(this.state.groups.map(group => group.users).flat(), "name")}
         addUsersToGroup={this.addUsersToGroup}
         changeToEventForm={this.changeToEventForm}
-        newEvent={this.state.newEvent} 
+        newEvent={this.state.newEvent}
         groups={this.state.groups} />
       )
     } else {
       if (this.state.toggleView === 'group') {
         return (
           <div>
-            < GroupContainer groups={this.state.groups} changeSelectedGroup={this.changeSelectedGroup} currentUser={this.state.currentUser} />
-            < GroupForm addUser={this.addUser} addGroup={this.addGroup} currentUser={this.state.currentUser} />
+            < GroupContainer groups={this.state.groups} changeSelectedGroup={this.changeSelectedGroup} currentUser={this.props.currentUser} />
+            < GroupForm addUser={this.addUser} addGroup={this.addGroup} currentUser={this.props.currentUser} />
           </div>
         )
       } else if (this.state.toggleView === 'event') {
