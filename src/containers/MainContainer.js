@@ -41,6 +41,7 @@ export default class MainContainer extends React.Component {
     }, () => {
        this.props.history.push("/groups/add_users")
     })
+  }
 
   addNewActivityForm = (event) => {
     event.preventDefault()
@@ -53,73 +54,6 @@ export default class MainContainer extends React.Component {
     event.preventDefault()
     this.setState({
       showActivityForm: false
-    })
-  }
-
-  addNewActivity = (event, title, location, group_id) => {
-    event.preventDefault()
-    this.hideActivityForm(event)
-
-    fetch('http://localhost:3000/activities', {
-      method: "POST",
-      headers: {
-        "Content-Type": 'application/json',
-        Accepts: 'application/json'
-      },
-      body: JSON.stringify({
-        title: title,
-        location: location
-      })
-    })
-    .then(res => res.json())
-    .then(activity => {
-      let updatedGroups = this.state.groups.map(group => {
-        if (group.id === group_id) {
-          group.activities.push(activity)
-          activity.groups.push(group)
-          return group
-        } else {
-          return group
-        }
-      })
-      this.setState({
-        groups: updatedGroups
-      })
-    })
-  }
-
-  addNewEvent = (event, name, time, group_id, activity_id, img_url) => {
-    event.preventDefault()
-    this.setState({
-      newEvent: false
-    })
-
-    fetch('http://localhost:3000/events', {
-      method: "POST",
-      headers: {
-        "Content-Type": 'application/json',
-        Accepts: 'application/json'
-      },
-      body: JSON.stringify({
-        name: name,
-        time: time,
-        group_id: group_id,
-        activity_id: activity_id
-      })
-    })
-    .then(res => res.json())
-    .then(newEvent => {
-      let updatedGroups = this.state.groups.map(group => {
-        if (group.id === group_id) {
-          group.events.push(newEvent)
-          return group
-        } else {
-          return group
-        }
-      })
-      this.setState({
-        groups: updatedGroups
-      })
     })
   }
 
@@ -152,12 +86,10 @@ export default class MainContainer extends React.Component {
                 newEvent={this.props.newEvent}
                 groups={this.props.groups}
                 passUsers={this.passUsers}
-                searchTerm={this.props.searchTerm} 
-                        changeToEventForm={this.changeToEventForm}
-    newEvent={this.state.newEvent}
-
-    
-    />
+                searchTerm={this.props.searchTerm}
+                changeToEventForm={this.changeToEventForm}
+                newEvent={this.state.newEvent}
+                />
               )
             } else {
               return <Redirect to="/404"/>
@@ -172,20 +104,20 @@ export default class MainContainer extends React.Component {
                searchTerm={this.props.searchTerm}
                currentUser={this.props.currentUser}
                addUser={this.props.addUser} />
-               <Link to="/group_form" ><button>Create New Group</button></Link>
               </>
             )
           }} />
           <Route path="/events/:id/new" render={(routerProps) => {
+            debugger
             const foundGroup = this.props.groups.find(group => group.id === parseInt(routerProps.match.params.id))
-            return (< EventForm group_id={foundGroup.id} groups={this.props.groups} 
-     hideActivityForm={this.hideActivityForm} addNewActivityForm={this.addNewActivityForm}
-        addNewActivity={this.addNewActivity}
-        showActivityForm={this.state.showActivityForm}
-        addNewEvent={this.addNewEvent}
-              events={this.removeDuplicates(this.state.groups.map(group => group.events).flat(), "id")}
-        activities={this.removeDuplicates(this.state.groups.map(group => group.activities).flat(), "id")}        
-/>)
+            return (< EventForm group_id={foundGroup.id} groups={this.props.groups}
+                     hideActivityForm={this.hideActivityForm} addNewActivityForm={this.addNewActivityForm}
+                     addNewActivity={this.props.addNewActivity}
+                     showActivityForm={this.state.showActivityForm}
+                     addNewEvent={this.props.addNewEvent}
+                     events={this.removeDuplicates(this.props.groups.map(group => group.events).flat(), "id")}
+                     activities={this.removeDuplicates(this.props.groups.map(group => group.activities).flat(), "id")}
+                    />)
             } } />
           <Route path="/events" render={() => {
             return(

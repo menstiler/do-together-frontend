@@ -19,7 +19,6 @@ export default class EventForm extends React.Component {
 
   render() {
     const { name, time, group_id, activity_id, img_url } = this.state
-
     return (
       <div>
         <form onSubmit={(event) => this.props.addNewEvent(event, name, time, group_id, activity_id, img_url)}>
@@ -45,8 +44,8 @@ export default class EventForm extends React.Component {
           </div>
           <input type="submit" value="Submit"/>
         </form>
-        {this.props.showActivityForm ? < ActivityForm hideActivityForm={this.props.hideActivityForm} addNewActivity={this.props.addNewActivity} group_id={group_id} /> : null}
       </div>
     )
   }
 }
+// {this.props.showActivityForm ? < ActivityForm hideActivityForm={this.props.hideActivityForm} addNewActivity={this.props.addNewActivity} group_id={group_id} /> : null}

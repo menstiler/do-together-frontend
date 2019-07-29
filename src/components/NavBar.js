@@ -21,7 +21,7 @@ function NavBar() {
         <a class="item right">
           <i class="x icon icon"></i>
           Logout
-        </a></Link>
+        </a>
       </div>
     </div>
   )

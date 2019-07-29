@@ -76,6 +76,7 @@ class App extends React.Component {
         groups: updatedGroups
       })
    })
+   this.props.history.push(`/groups/${group_id}`)
   }
 
   removeUser = (user_id, group_id) => {
@@ -120,12 +121,80 @@ class App extends React.Component {
     })
   }
 
+  addNewActivity = (event, title, location, group_id) => {
+    event.preventDefault()
+    this.hideActivityForm(event)
+
+    fetch('http://localhost:3000/activities', {
+      method: "POST",
+      headers: {
+        "Content-Type": 'application/json',
+        Accepts: 'application/json'
+      },
+      body: JSON.stringify({
+        title: title,
+        location: location
+      })
+    })
+    .then(res => res.json())
+    .then(activity => {
+      let updatedGroups = this.state.groups.map(group => {
+        if (group.id === group_id) {
+          group.activities.push(activity)
+          activity.groups.push(group)
+          return group
+        } else {
+          return group
+        }
+      })
+      this.setState({
+        groups: updatedGroups
+      })
+    })
+  }
+
+  addNewEvent = (event, name, time, group_id, activity_id, img_url) => {
+    debugger
+    event.preventDefault()
+    this.setState({
+      newEvent: false
+    })
+
+    fetch('http://localhost:3000/events', {
+      method: "POST",
+      headers: {
+        "Content-Type": 'application/json',
+        Accepts: 'application/json'
+      },
+      body: JSON.stringify({
+        name: name,
+        time: time,
+        group_id: group_id,
+        activity_id: activity_id
+      })
+    })
+    .then(res => res.json())
+    .then(newEvent => {
+      let updatedGroups = this.state.groups.map(group => {
+        if (group.id === group_id) {
+          group.events.push(newEvent)
+          return group
+        } else {
+          return group
+        }
+      })
+      this.setState({
+        groups: updatedGroups
+      })
+    })
+    this.props.history.push(`/groups/${group_id}`)
+  }
+
   addUsersToGroup = (event, group_id, users) => {
     event.preventDefault()
     users.forEach(user => {
       this.addUser(user, group_id)
     })
-    this.props.history.push(`/groups/${group_id}`)
   }
 
   render() {
@@ -151,7 +220,9 @@ class App extends React.Component {
               groups={this.state.groups}
               {...routerProps}
               searchTerm={this.state.searchTerm}
-              handleChange={this.handleChange} />
+              handleChange={this.handleChange}
+              addNewEvent={this.addNewEvent}
+              addNewActivity={this.addNewActivity} />
             ) }}/>
         </Switch>
       </div>

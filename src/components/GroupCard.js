@@ -6,8 +6,8 @@ export default class GroupCard extends React.Component {
     const { name, users, id, creator } = this.props.group
 
     return (
-      <Link to={`/groups/${id}`} ><div>
-      <div onClick={() => this.props.changeSelectedGroup(id)}>
+      <Link to={`/groups/${id}`} >
+      <div>
         <h3></h3>
         <p></p>
         <div className="ui card">
