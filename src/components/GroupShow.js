@@ -67,7 +67,12 @@ export default class GroupShow extends React.Component {
           }
         </div>
         <span>
+        {
+          users.map(user => user.id).includes(this.props.currentUser.id) ?
           <Link to={`/events/${id}/new`} ><button onClick={this.props.changeToEventForm}>Create Event</button></Link>
+          :
+          null
+        }
         </span>
       </div>
     )
