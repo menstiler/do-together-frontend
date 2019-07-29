@@ -11,7 +11,7 @@ export default class GroupContainer extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="group-row" className="ui link cards">
         {this.renderGroupCards()}
       </div>
     )

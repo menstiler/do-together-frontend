@@ -16,7 +16,7 @@ export default class EventContainer extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="event-row">
         < EventList events={this.props.events}
          handleClick={this.selectEvent}
         selectedGroup={this.props.selectedGroup}

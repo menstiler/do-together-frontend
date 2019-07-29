@@ -5,14 +5,23 @@ export default class ControllerContainer extends React.Component {
 
   render() {
     return (
-      <div>
-      <label>Search: </label>
-      <input type="text" value={this.props.searchTerm} onChange={this.props.handleChange}/>
-      <div class="ui buttons">
-        <Link to="/groups"><button class="ui button" onClick={this.props.handleChange} value="">Groups</button></Link>
-        <Link to="/events"><button class="ui button" onClick={this.props.handleChange} value="">Events</button></Link>
+    <div>
+      <div className="ui menu">
+        <div className="item">
+          <div className="ui icon input">
+            <input type="text" value={this.props.searchTerm} onChange={this.props.handleChange} placeholder="Search"/>
+            <i className="search icon"></i>
+          </div>
+        </div>
+        <div className="item right">
+        <div class="ui buttons">
+          <Link to="/groups"><button className="ui button" onClick={this.props.handleChange} value="">Groups</button></Link>
+          <div class="or"></div>
+          <Link to="/events"><button className="ui button" onClick={this.props.handleChange} value="">Events</button></Link>
+        </div>
+        </div>
       </div>
-      </div>
+    </div>
     )
   }
 }

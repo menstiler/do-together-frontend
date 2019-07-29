@@ -8,7 +8,7 @@ export default class EventCard extends React.Component {
       <div onClick={() => this.props.handleClick(id)} className="ui card">
         <div className="card">
           <div className="content">
-            <i class="right floated lemon outline icon"></i>
+            <i className="right floated lemon outline icon"></i>
           <div className="header">
             {name}
           </div>
