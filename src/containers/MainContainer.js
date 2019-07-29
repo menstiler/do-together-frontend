@@ -15,8 +15,7 @@ export default class MainContainer extends React.Component {
     newUsers: [],
     selectedGroup: null,
     selectedEvent: 1,
-    newEvent: false,
-    showActivityForm: false
+    newEvent: false
   }
 
   changeToEventForm = () => {
@@ -42,21 +41,6 @@ export default class MainContainer extends React.Component {
        this.props.history.push("/groups/add_users")
     })
   }
-
-  addNewActivityForm = (event) => {
-    event.preventDefault()
-    this.setState({
-      showActivityForm: true
-    })
-  }
-
-  hideActivityForm = (event) => {
-    event.preventDefault()
-    this.setState({
-      showActivityForm: false
-    })
-  }
-
 
   render() {
     console.log(this.state.groups)
@@ -87,7 +71,6 @@ export default class MainContainer extends React.Component {
                 groups={this.props.groups}
                 passUsers={this.passUsers}
                 searchTerm={this.props.searchTerm}
-                changeToEventForm={this.changeToEventForm}
                 newEvent={this.state.newEvent}
                 />
               )
@@ -108,24 +91,28 @@ export default class MainContainer extends React.Component {
             )
           }} />
           <Route path="/events/:id/new" render={(routerProps) => {
-            debugger
             const foundGroup = this.props.groups.find(group => group.id === parseInt(routerProps.match.params.id))
-            return (< EventForm group_id={foundGroup.id} groups={this.props.groups}
-                     hideActivityForm={this.hideActivityForm} addNewActivityForm={this.addNewActivityForm}
-                     addNewActivity={this.props.addNewActivity}
-                     showActivityForm={this.state.showActivityForm}
-                     addNewEvent={this.props.addNewEvent}
-                     events={this.removeDuplicates(this.props.groups.map(group => group.events).flat(), "id")}
-                     activities={this.removeDuplicates(this.props.groups.map(group => group.activities).flat(), "id")}
-                    />)
-            } } />
+            return (
+              < EventForm
+              group_id={foundGroup.id}
+              groups={this.props.groups}
+              hideActivityForm={this.props.hideActivityForm} addNewActivityForm={this.props.addNewActivityForm}
+              addNewActivity={this.props.addNewActivity}
+              showActivityForm={this.props.showActivityForm}
+              addNewEvent={this.props.addNewEvent}
+              events={this.removeDuplicates(this.props.groups.map(group => group.events).flat(), "id")}
+              activities={this.removeDuplicates(this.props.groups.map(group => group.activities).flat(), "id")}
+              />)
+            }} />
           <Route path="/events" render={() => {
             return(
               <>
                 < ControllerContainer handleChange={this.props.handleChange} searchTerm={this.props.searchTerm}/>
-                < EventContainer
-                events={this.props.groups.map(group => group.events).flat()}
-                searchTerm={this.props.searchTerm} />
+                <div>
+                  < EventContainer
+                  events={this.props.groups.map(group => group.events).flat()}
+                  searchTerm={this.props.searchTerm} />
+                </div>
               </>
             )
           }} />

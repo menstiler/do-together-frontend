@@ -38,9 +38,11 @@ export default class GroupForm extends React.Component {
     return (
       <div>
         <h3>Create new Group</h3>
-        <form onSubmit={this.handleSubmit}>
-          <input name='name' value={this.state.value} onChange={this.handleChange} />
-          <input type="submit" />
+        <form onSubmit={this.handleSubmit} className="ui form">
+          <div className="field">
+            <input name='name' value={this.state.value} placeholder="Name" onChange={this.handleChange} />
+          </div>
+          <input className="ui primary button" type="submit" />
         </form>
       </div>
     )

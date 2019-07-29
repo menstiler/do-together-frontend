@@ -3,25 +3,25 @@ import { Link, Route, Switch, Redirect } from 'react-router-dom'
 function NavBar() {
   return (
     <div>
-      <div class="ui labeled icon menu">
-        <div class="header item">
-          <i class="lemon outline icon"></i>
+      <div className="ui labeled icon menu">
+        <div className="header item">
+          <i className="lemon outline icon"></i>
           Do Together
         </div>
-       <Link to="/" ><a class="item">
-          <i class="home icon"></i>
+       <Link to="/" ><a className="item">
+          <i className="home icon"></i>
           Home
         </a></Link>
-        <Link to="/profile" ><a class="item">
-          <i class="user icon"></i>
+        <Link to="/profile" ><a className="item">
+          <i className="user icon"></i>
           Profile
         </a></Link>
-        <Link to="/group_form" ><a class="item">
-          <i class="users icon"></i>
+        <Link to="/group_form" ><a className="item">
+          <i className="users icon"></i>
           Create New Group
         </a></Link>
-        <a class="item right">
-          <i class="x icon icon"></i>
+        <a className="item right">
+          <i className="x icon icon"></i>
           Logout
         </a>
       </div>

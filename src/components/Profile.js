@@ -22,7 +22,7 @@ class Profile extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="profile">
         <div>{this.props.currentUser.name}</div>
         <h3>My Groups</h3>
           < GroupContainer groups={this.state.groups}
@@ -30,7 +30,7 @@ class Profile extends React.Component {
            addUser={this.props.addUser}
            addGroup={this.props.addGroup}
            searchTerm="" />
-        <h3>Upcoming Event</h3>
+        <h3>Upcoming Events</h3>
         < EventContainer events={this.state.events}
         searchTerm="" />
       </div>
