@@ -7,6 +7,7 @@ export default class GroupCard extends React.Component {
 
     return (
       <Link to={`/groups/${id}`} >
+<<<<<<< HEAD
       <div>
         <h3></h3>
         <p></p>
@@ -15,19 +16,29 @@ export default class GroupCard extends React.Component {
             <a className="header">{name}</a>
             <div className="meta">
               <span className="date">Created By {creator}</span>
+=======
+        <div>
+          <h3></h3>
+          <p></p>
+          <div className="ui card">
+            <div className="content">
+              <a className="header">{name}</a>
+              <div className="meta">
+                <span className="date">Created By {creator}</span>
+              </div>
+              <div className="description">
+                Group Description...
+              </div>
+>>>>>>> 242213cb337bc60eed5c47f7e76bb04e3b9c83dc
             </div>
-            <div className="description">
-              Group Description...
+            <div className="extra content">
+              <a>
+              <i className="user icon"></i>
+              {users.length} members
+              </a>
             </div>
-          </div>
-          <div className="extra content">
-            <a>
-            <i className="user icon"></i>
-            {users.length} members
-            </a>
           </div>
         </div>
-      </div>
       </Link>
     )
   }
