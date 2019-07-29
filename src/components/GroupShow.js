@@ -54,7 +54,7 @@ export default class GroupShow extends React.Component {
         <span>
           <button onClick={this.props.changeToEventForm}>Create Event</button>
         </span>
-        {this.props.newEvent ? < EventForm group_id={id} groups={this.props.groups} /> : null}
+        {this.props.newEvent ? < EventForm group_id={id} events={this.props.events} activities={this.props.activities} hideActivityForm={this.props.hideActivityForm} addNewActivityForm={this.props.addNewActivityForm} addNewActivity={this.props.addNewActivity} showActivityForm={this.props.showActivityForm} addNewEvent={this.props.addNewEvent} /> : null}
       </div>
     )
   }
