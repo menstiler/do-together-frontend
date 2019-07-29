@@ -11,11 +11,7 @@ export default class GroupContainer extends React.Component {
 
   render() {
     return (
-<<<<<<< HEAD
-      <div className="group-container">
-=======
       <div id="group-row" className="ui link cards">
->>>>>>> c28b56a3611bfacb25583e115a0acfffafabb6a2
         {this.renderGroupCards()}
       </div>
     )
