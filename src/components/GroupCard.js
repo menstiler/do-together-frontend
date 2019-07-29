@@ -6,27 +6,23 @@ export default class GroupCard extends React.Component {
     const { name, users, id, creator } = this.props.group
 
     return (
-      <Link to={`/groups/${id}`} >
-      <div>
-          <div className="ui card">
-            <div className="content">
-              <a className="header">{name}</a>
-              <div className="meta">
-                <span className="date">Created By {creator}</span>
-              </div>
-              <div className="description">
-                Group Description...
-              </div>
+        <Link to={`/groups/${id}`} className="card" >
+          <div className="content">
+            <a className="header">{name}</a>
+            <div className="meta">
+              <span className="date">Created By {creator}</span>
             </div>
-            <div className="extra content">
-              <a>
-              <i className="user icon"></i>
-              {users.length} members
-              </a>
+            <div className="description">
+              Group Description...
             </div>
           </div>
-        </div>
-      </Link>
+          <div className="extra content">
+            <a>
+            <i className="user icon"></i>
+            {users.length} members
+            </a>
+          </div>
+        </Link>
     )
   }
 }

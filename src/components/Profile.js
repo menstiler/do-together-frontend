@@ -22,7 +22,7 @@ class Profile extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="profile">
         <div class="ui card">
           <a class="image" href="#">
             <img src={this.props.currentUser.image}/>
@@ -37,8 +37,9 @@ class Profile extends React.Component {
            addUser={this.props.addUser}
            addGroup={this.props.addGroup}
            searchTerm="" />
-        <h3>Upcoming Event</h3>
-        < EventContainer events={this.state.events} searchTerm="" />
+        <h3>Upcoming Events</h3>
+        < EventContainer events={this.state.events}
+        searchTerm="" />
       </div>
     )
   }

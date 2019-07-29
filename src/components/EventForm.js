@@ -17,35 +17,51 @@ export default class EventForm extends React.Component {
     })
   }
 
+  selectActivity = (activity_id) => {
+    this.setState({
+      activity_id: activity_id
+    })
+  }
+
+  renderActivities = () => {
+    return this.props.activities.map(activity => {
+      return (
+        <div onClick={() => this.selectActivity(activity.id)} className={this.state.activity_id === activity.id ? 'user-border on' : 'user-border off'}>
+          <div>{activity.title}</div>
+        </div>
+      )
+    })
+  }
+
+  renderRestOfForm = () => {
+    return (
+      <React.Fragment>
+      <label>
+        Event Name:
+        <input type="text" name="name" value={this.state.name} onChange={this.handleChange} placeholder="Name" />
+      </label>
+      <label>
+        Date:
+        <input type="datetime-local" name="time" value={this.state.time} onChange={this.handleChange} placeholder="Date" />
+      </label>
+      </React.Fragment>
+    )
+  }
+
   render() {
     const { name, time, group_id, activity_id, img_url } = this.state
     return (
       <div>
         <form onSubmit={(event) => this.props.addNewEvent(event, name, time, group_id, activity_id, img_url)}>
-          <label>
-            Event Name:
-            <input type="text" name="name" value={name} onChange={this.handleChange} placeholder="Name" />
-          </label>
-          <label>
-            Date:
-            <input type="datetime-local" name="time" value={time} onChange={this.handleChange} placeholder="Date" />
-          </label>
+          {this.renderActivities()}
+          {this.state.activity_id !== 0 ? this.renderRestOfForm() : null}
           <div>
-            <label>
-              Activity:
-              <select value={activity_id} name="activity_id" onChange={this.handleChange} >
-                <option value="0">Select An Activity</option>
-                {this.props.activities.map(activity => {
-                  return <option value={activity.id}>{activity.title}</option>
-                })}
-              </select>
-            </label>
             <button onClick={this.props.addNewActivityForm}>+</button>
           </div>
-          <input type="submit" value="Submit"/>
+          <input className="ui primary button" type="submit" value="Submit"/>
         </form>
+        {this.props.showActivityForm ? < ActivityForm hideActivityForm={this.props.hideActivityForm} addNewActivity={this.props.addNewActivity} group_id={group_id} /> : null}
       </div>
     )
   }
 }
-// {this.props.showActivityForm ? < ActivityForm hideActivityForm={this.props.hideActivityForm} addNewActivity={this.props.addNewActivity} group_id={group_id} /> : null}
