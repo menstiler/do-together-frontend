@@ -5,143 +5,18 @@ import EventContainer from './EventContainer'
 import GroupShow from '../components/GroupShow'
 import EventForm from '../components/EventForm'
 import GroupForm from '../components/GroupForm'
+import AddUsers from '../components/AddUsers'
+import { Link, Route, Switch, Redirect } from 'react-router-dom'
 
-const API = 'http://localhost:3000/groups'
 
 export default class MainContainer extends React.Component {
+
   state = {
-    groups: [],
-    toggleView: 'group',
+    newUsers: [],
     selectedGroup: null,
-    selectedEvent: 1,
-    newEvent: false,
-    // currentUser: {
-    //   "id": 1,
-    //   "name": "Donnell Ankunding",
-    //   }
   }
 
-  componentDidMount() {
-    fetch(API)
-    .then(resp => resp.json())
-    .then(groups => {
-      this.setState({
-        groups: groups,
-      })
-    })
-  }
 
-  changeToGroupView = () => {
-    this.setState((prevState) => ({
-      toggleView: 'group',
-      selectedGroup: null,
-      newEvent: false
-    }))
-  }
-
-  changeToEventView = () => {
-    this.setState((prevState) => ({
-      toggleView: 'event',
-      selectedGroup: null,
-      newEvent: false
-    }))
-  }
-
-  changeSelectedGroup = (id) => {
-    this.setState({
-      selectedGroup: id
-    })
-  }
-
-  selectEvent = (id) => {
-    this.setState({
-      selectedEvent: id
-    })
-  }
-
-  changeToEventForm = () => {
-    this.setState({
-      newEvent: true
-    })
-  }
-
-  addUser = (user_id, group_id) => {
-    fetch('http://localhost:3000/user_groups', {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify({
-        user_group: {
-          user_id: user_id,
-          group_id: group_id
-        }
-      })
-    })
-    .then(resp => resp.json())
-    .then(json => {
-      let updatedGroups = this.state.groups.map(group => {
-        if (group.id === group_id) {
-          group.users.push(this.props.currentUser)
-          return group
-          console.log(group)
-        } else {
-          return group
-        }
-      })
-      this.setState({
-        groups: updatedGroups
-      })
-   })
-  }
-
-  removeUser = (user_id, group_id) => {
-    fetch(`http://localhost:3000/groups/${group_id}/remove_user/${user_id}`, {
-      method: "DELETE"
-    })
-    let updatedGroups = this.state.groups.map(group => {
-      if (group.id === group_id) {
-        let userIndex = group.users.indexOf(this.props.currentUser)
-        group.users.splice(userIndex, 1)
-        return group
-        console.log(group)
-      } else {
-        return group
-      }
-    })
-    this.setState({
-      groups: updatedGroups
-    })
-  }
-
-  addGroup = (newGroup) => {
-    let updatedGroups = [...this.state.groups, newGroup]
-    this.setState({
-      groups: updatedGroups,
-      selectedGroup: newGroup.id
-    })
-  }
-
-  removeGroup = (group_id) => {
-    this.setState({
-      selectedGroup: null
-    }, () => {
-      fetch(`http://localhost:3000/groups/${group_id}`, {
-        method: "DELETE"
-      })
-      let updatedGroups = [...this.state.groups].map(group => {
-        if (group.id !== group_id) {
-          return group
-        }
-      }).filter(function( element ) {
-        return element !== undefined;
-      })
-      this.setState({
-        groups: updatedGroups,
-      })
-    })
-  }
 
   removeDuplicates = (myArr, prop) => {
     return myArr.filter((obj, pos, arr) => {
@@ -149,80 +24,94 @@ export default class MainContainer extends React.Component {
     })
   }
 
-  addUsersToGroup = (event, group_id, users) => {
-    event.preventDefault()
-    users.forEach(user => {
-      fetch('http://localhost:3000/user_groups', {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify({
-          user_group: {
-            user_id: user.id,
-            group_id: group_id
-          }
-        })
-      })
-      .then(resp => resp.json())
-      .then(json => {
-        debugger
-        let updatedGroups = this.state.groups.map(group => {
-          if (group.id === group_id) {
-            group.users.push(user)
-            return group
-            console.log(group)
-          } else {
-            return group
-          }
-        })
-        this.setState({
-          groups: updatedGroups
-        })
-     })
-  })
-}
-
-  renderContainer = () => {
-    if (this.state.selectedGroup !== null) {
-      return (
-        < GroupShow
-        addUser={this.addUser}
-        selectedGroup={this.state.groups.find(group => group.id === this.state.selectedGroup)}
-        handleClick={this.selectEvent}
-        currentUser={this.props.currentUser}
-        removeUser={this.removeUser}
-        removeGroup={this.removeGroup}
-        users={this.removeDuplicates(this.state.groups.map(group => group.users).flat(), "name")}
-        addUsersToGroup={this.addUsersToGroup}
-        changeToEventForm={this.changeToEventForm}
-        newEvent={this.state.newEvent}
-        groups={this.state.groups} />
-      )
-    } else {
-      if (this.state.toggleView === 'group') {
-        return (
-          <div>
-            < GroupContainer groups={this.state.groups} changeSelectedGroup={this.changeSelectedGroup} currentUser={this.props.currentUser} />
-            < GroupForm addUser={this.addUser} addGroup={this.addGroup} currentUser={this.props.currentUser} />
-          </div>
-        )
-      } else if (this.state.toggleView === 'event') {
-        return < EventContainer events={this.state.groups.map(group => group.events).flat()} selectedGroup={this.state.selectedGroup} handleClick={this.selectEvent} selectedEvent={this.state.selectedEvent}/>
-      }
-    }
+  passUsers = (users, group) => {
+    let allUsers = this.removeDuplicates(this.props.groups.map(group => group.users).flat(), "id")
+    let newUsers = allUsers.filter(newUser => !users.map(user => user.id).includes(newUser.id))
+    this.setState({
+      newUsers: newUsers,
+      selectedGroup: group
+    }, () => {
+       this.props.history.push("/groups/add_users")
+    })
   }
-
 
 
   render() {
     return (
       <div>
-        < ControllerContainer
-        changeToGroupView={this.changeToGroupView}
-        changeToEventView={this.changeToEventView} />
-        {this.renderContainer()}
+        <Switch>
+
+          <Route path="/groups/add_users" render={() => {
+            return <AddUsers
+                users={this.state.newUsers}
+                addUsersToGroup={this.props.addUsersToGroup}
+                selectedGroup={this.state.selectedGroup.id}/>
+          }} />
+          <Route path="/groups/:id" render={(routerProps) => {
+            const foundGroup = this.props.groups.find(group => group.id === parseInt(routerProps.match.params.id))
+            if (foundGroup) {
+              return (
+                <GroupShow
+                addUser={this.props.addUser}
+                selectedGroup={foundGroup}
+                handleClick={this.props.selectEvent}
+                currentUser={this.props.currentUser}
+                removeUser={this.props.removeUser}
+                removeGroup={this.props.removeGroup}
+                addUsersToGroup={this.props.addUsersToGroup}
+                changeToEventForm={this.props.changeToEventForm}
+                newEvent={this.props.newEvent}
+                groups={this.props.groups}
+                passUsers={this.passUsers}
+                searchTerm={this.props.searchTerm} />
+              )
+            } else {
+              return <Redirect to="/404"/>
+            }
+          }} />
+
+          <Route path="/groups" render={() => {
+            return (
+              <>
+              < ControllerContainer handleChange={this.props.handleChange} searchTerm={this.props.searchTerm}/>
+              < GroupContainer groups={this.props.groups}
+               searchTerm={this.props.searchTerm}
+               currentUser={this.props.currentUser}
+               addUser={this.props.addUser} />
+               <Link to="/group_form" ><button>Create New Group</button></Link>
+              </>
+            )
+          }} />
+          <Route path="/events/:id/new" render={(routerProps) => {
+            const foundGroup = this.props.groups.find(group => group.id === parseInt(routerProps.match.params.id))
+            return (< EventForm group_id={foundGroup.id} groups={this.props.groups} />)
+            } } />
+          <Route path="/events" render={() => {
+            return(
+              <>
+                < ControllerContainer handleChange={this.props.handleChange} searchTerm={this.props.searchTerm}/>
+                < EventContainer
+                events={this.props.groups.map(group => group.events).flat()}
+                searchTerm={this.props.searchTerm} />
+              </>
+            )
+          }} />
+          <Route path="/group_form" render={() =>
+            < GroupForm addUser={this.props.addUser}
+            addGroup={this.props.addGroup}
+            currentUser={this.props.currentUser} />
+          } />
+          <Route path="/" render={() => {
+            return (
+              <>
+                < ControllerContainer handleChange={this.props.handleChange} search={this.props.searchTerm}/>
+                < GroupContainer groups={this.props.groups}
+                 searchTerm={this.props.searchTerm}
+                 currentUser={this.props.currentUser}
+                 addUser={this.props.addUser} />
+           </>
+         )}} />
+        </Switch>
       </div>
     )
   }

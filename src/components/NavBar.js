@@ -1,12 +1,12 @@
 import React from 'react'
-
+import { Link, Route, Switch, Redirect } from 'react-router-dom'
 function NavBar() {
   return (
     <div>
-      <button>Home</button>
-      <button>Profile</button>
+      <Link to="/" ><button>Home</button></Link>
+      <Link to="/profile" ><button>Profile</button></Link>
       <button>Logout</button>
-      <button>Create New Group</button>
+      <Link to="/group_form" ><button>Create New Group</button></Link>
     </div>
   )
 }

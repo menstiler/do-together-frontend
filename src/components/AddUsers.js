@@ -9,7 +9,6 @@ export default class AddUsers extends React.Component {
 
   addUser = (id) => {
     let newUser = this.props.users.find(user => user.id === id)
-    // debugger
     if (!this.state.newUsers.includes(newUser)) {
       this.setState({
         newUsers: [...this.state.newUsers, newUser]
@@ -35,7 +34,6 @@ export default class AddUsers extends React.Component {
 
   handleSubmit = (event, selectedGroup, newUsers) => {
     event.preventDefault()
-    debugger
     this.props.addUsersToGroup(event, selectedGroup, newUsers)
     this.setState({
       newUsers: []
@@ -48,7 +46,7 @@ export default class AddUsers extends React.Component {
       <div>
         <form onSubmit={(event) => this.handleSubmit(event, this.props.selectedGroup, this.state.newUsers)}>
           {this.renderUsers()}
-          <input type="submit" />
+          <input type="submit" value="Add Members" />
         </form>
       </div>
     )

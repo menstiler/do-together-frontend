@@ -1,8 +1,8 @@
 import React from 'react'
 import EventList from '../containers/EventList'
 import EventForm from './EventForm'
-import AddUsers from '../components/AddUsers'
 import EventShow from '../components/EventShow'
+import { Link } from 'react-router-dom'
 
 export default class GroupShow extends React.Component {
 
@@ -12,10 +12,16 @@ export default class GroupShow extends React.Component {
   }
 
   handleClick = (id) => {
-    this.setState({
-      selectedEvent: id,
-      showEvent: !this.state.showEvent
-    })
+    if (id === this.state.selectedEvent) {
+      this.setState({
+        showEvent: !this.state.showEvent
+      })
+    } else {
+      this.setState({
+        selectedEvent: id,
+        showEvent: true
+      })
+    }
   }
 
   render() {
@@ -29,7 +35,7 @@ export default class GroupShow extends React.Component {
           ?
           < button onClick={() => this.props.removeUser(this.props.currentUser.id, id)}>Leave Group</button>
           :
-          < button onClick={() => this.props.addUser(this.props.currentUser.id, id)}>Join Group</button>
+          < button onClick={() => this.props.addUser(this.props.currentUser, id)}>Join Group</button>
         }
         {
           this.props.currentUser.id === parseInt(creator) && users.map(user => user.id).includes(this.props.currentUser.id)
@@ -41,7 +47,7 @@ export default class GroupShow extends React.Component {
         </div>
         <div>
           <h3>Events</h3>
-          < EventList key={id} events={events} parent="groupShow" handleClick={this.handleClick} />
+          < EventList key={id} events={events} parent="groupShow" handleClick={this.handleClick} searchTerm={this.props.searchTerm} />
           {
             this.state.showEvent ? < EventShow parent="groupShow" selectedEvent={events.find(event => event.id === this.state.selectedEvent)}/> : null
           }
@@ -54,21 +60,18 @@ export default class GroupShow extends React.Component {
           {
             users.map(user => user.id).includes(this.props.currentUser.id) ?
             <div>
-              <h3>Add users</h3>
-              <AddUsers
-              users={this.props.users.filter(new_user => !users.map(user => user.id).includes(new_user.id))}
-              addUsersToGroup={this.props.addUsersToGroup}
-              selectedGroup={id}/>
+              <button onClick={() => this.props.passUsers(users, this.props.selectedGroup)}>Add Members</button>
             </div>
             :
             null
           }
         </div>
         <span>
-          <button onClick={this.props.changeToEventForm}>Create Event</button>
+          <Link to={`/events/${id}/new`} ><button onClick={this.props.changeToEventForm}>Create Event</button></Link>
         </span>
-        {this.props.newEvent ? < EventForm group_id={id} groups={this.props.groups} /> : null}
       </div>
     )
   }
 }
+
+// {this.props.newEvent ? < EventForm group_id={id} groups={this.props.groups} /> : null}
