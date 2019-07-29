@@ -25,8 +25,13 @@ export default class AddUsers extends React.Component {
   renderUsers = () => {
     return this.props.users.map(user => {
       return (
-        <div onClick={() => this.addUser(user.id)} className={this.state.newUsers.includes(user) ? 'user-border on' : 'user-border off'}>
-          <div >{user.name}</div>
+        <div onClick={() => this.addUser(user.id)} className={this.state.newUsers.includes(user) ? 'user-border on card' : 'user-border off card'}>
+            <div className="content">
+              <img className="right floated mini ui image" src={user.image} />
+            <div className="header">
+              {user.name}
+            </div>
+            </div>
         </div>
       )
     })
@@ -45,7 +50,9 @@ export default class AddUsers extends React.Component {
     return (
       <div>
         <form onSubmit={(event) => this.handleSubmit(event, this.props.selectedGroup, this.state.newUsers)}>
+          <div className="ui cards">
           {this.renderUsers()}
+          </div>
           <input type="submit" value="Add Members" />
         </form>
       </div>

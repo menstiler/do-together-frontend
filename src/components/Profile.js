@@ -5,7 +5,8 @@ class Profile extends React.Component {
 
   state = {
     events: [],
-    groups: []
+    groups: [],
+    file: null
   }
 
   componentDidMount() {
@@ -19,11 +20,17 @@ class Profile extends React.Component {
     })
   }
 
-
   render() {
     return (
       <div>
-        <div>{this.props.currentUser.name}</div>
+        <div class="ui card">
+          <a class="image" href="#">
+            <img src={this.props.currentUser.image}/>
+          </a>
+          <div class="content">
+            <a class="header" href="#">{this.props.currentUser.name}</a>
+          </div>
+        </div>
         <h3>My Groups</h3>
           < GroupContainer groups={this.state.groups}
            currentUser={this.props.currentUser}
@@ -31,11 +38,11 @@ class Profile extends React.Component {
            addGroup={this.props.addGroup}
            searchTerm="" />
         <h3>Upcoming Event</h3>
-        < EventContainer events={this.state.events}
-        searchTerm="" />
+        < EventContainer events={this.state.events} searchTerm="" />
       </div>
     )
   }
 }
+
 
 export default Profile

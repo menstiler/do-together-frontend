@@ -61,7 +61,7 @@ export default class MainContainer extends React.Component {
   render() {
     console.log(this.state.groups)
     return (
-      <div>
+      <div >
         <Switch>
 
           <Route path="/groups/add_users" render={() => {

@@ -32,10 +32,10 @@
   }
 }
 
-.user-border.off {
+.ui.cards>.card.user-border.off {
   border: solid 1px black
 }
 
-.user-border.on {
-  border: solid 1px green
+.ui.cards>.card.user-border.on {
+  border: solid 3px green
 }

@@ -54,9 +54,20 @@ export default class GroupShow extends React.Component {
         </div>
         <div>
           <h3>Members</h3>
+          <div className="ui cards">
           {users.map(user => {
-              return <p>{user.name}</p>
-            })}
+              return  (
+                <div className="card">
+                <div className="content">
+                  <img className="right floated mini ui image" src={user.image} />
+                <div className="header">
+                  {user.name}
+                </div>
+                </div>
+              </div>
+              )
+            }) }
+          </div>
           {
             users.map(user => user.id).includes(this.props.currentUser.id) ?
             <div>
