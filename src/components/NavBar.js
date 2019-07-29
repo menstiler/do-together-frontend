@@ -3,10 +3,26 @@ import { Link, Route, Switch, Redirect } from 'react-router-dom'
 function NavBar() {
   return (
     <div>
-      <Link to="/" ><button>Home</button></Link>
-      <Link to="/profile" ><button>Profile</button></Link>
-      <button>Logout</button>
-      <Link to="/group_form" ><button>Create New Group</button></Link>
+
+      <div class="ui labeled icon menu">
+        <div class="header item">
+          <i class="lemon outline icon"></i>
+          Do Together
+        </div>
+       <Link to="/" ><a class="item">
+          <i class="home icon"></i>
+          Home
+        </a></Link>
+        <Link to="/profile" ><a class="item">
+          <i class="user icon"></i>
+          Profile
+        </a></Link>
+        <Link to="/group_form" ><a class="item">Create New Group</a></Link>
+        <a class="item right">
+          <i class="x icon icon"></i>
+          Logout
+        </a></Link>
+      </div>
     </div>
   )
 }
