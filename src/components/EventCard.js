@@ -4,7 +4,6 @@ export default class EventCard extends React.Component {
 
   render() {
     const { name, group, id } = this.props.eventItem
-
     return (
       <div onClick={() => this.props.handleClick(id)} className="ui card">
         <div className="card">

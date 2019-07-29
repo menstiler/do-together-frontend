@@ -1,10 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default class GroupCard extends React.Component {
   render() {
     const { name, users, id, creator } = this.props.group
 
     return (
+      <Link to={`/groups/${id}`} ><div>
       <div onClick={() => this.props.changeSelectedGroup(id)}>
         <h3></h3>
         <p></p>
@@ -26,6 +28,7 @@ export default class GroupCard extends React.Component {
           </div>
         </div>
       </div>
+      </Link>
     )
   }
 }

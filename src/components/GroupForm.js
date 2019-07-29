@@ -29,7 +29,7 @@ export default class GroupForm extends React.Component {
     })
     .then(resp => resp.json())
     .then(newGroup => {
-      this.props.addUser(this.props.currentUser.id, newGroup.id)
+      this.props.addUser(this.props.currentUser, newGroup.id)
       this.props.addGroup(newGroup)
     })
   }
