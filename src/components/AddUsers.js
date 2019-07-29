@@ -35,7 +35,7 @@ export default class AddUsers extends React.Component {
 
   handleSubmit = (event, selectedGroup, newUsers) => {
     event.preventDefault()
-    debugger
+
     this.props.addUsersToGroup(event, selectedGroup, newUsers)
     this.setState({
       newUsers: []
