@@ -92,7 +92,7 @@ export default class GroupShow extends React.Component {
         <div style={{padding: "1%"}}>
           {
             users.map(user => user.id).includes(this.props.currentUser.id) ?
-            <Link to={`/events/${id}/new`} ><button onClick={this.props.changeToEventForm} className="ui primary button">Create Event</button></Link>
+            <Link to={`/events/${id}/new`} ><button className="ui primary button">Create Event</button></Link>
             :
             null
           }
@@ -106,7 +106,7 @@ export default class GroupShow extends React.Component {
             null
           }
           {
-            this.props.currentUser.id === parseInt(creator) && users.map(user => user.id).includes(this.props.currentUser.id)
+            this.props.currentUser.name === creator && users.map(user => user.id).includes(this.props.currentUser.id)
             ?
             < button onClick={() => this.props.removeGroup(id)} className="negative ui button">Delete Group</button>
             :

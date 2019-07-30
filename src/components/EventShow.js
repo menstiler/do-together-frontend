@@ -13,7 +13,7 @@ export default class EventShow extends React.Component {
     .then(json => {
       this.setState({
         longLat: json.results[0].locations[0].displayLatLng
-      })
+      }, () => console.log(this.state.longLat))
     })
   }
 

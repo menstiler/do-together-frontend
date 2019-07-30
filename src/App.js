@@ -13,7 +13,8 @@ class App extends React.Component {
     currentUser: null,
     groups: [],
     newEvent: false,
-    searchTerm: ''
+    searchTerm: '',
+    showActivityForm: false
   }
 
   handleChange = (event) => {
@@ -121,6 +122,21 @@ class App extends React.Component {
     })
   }
 
+  addNewActivityForm = (event) => {
+    debugger
+    event.preventDefault()
+    this.setState({
+      showActivityForm: true
+    })
+  }
+
+  hideActivityForm = (event) => {
+    event.preventDefault()
+    this.setState({
+      showActivityForm: false
+    })
+  }
+
   addNewActivity = (event, title, location, group_id) => {
     event.preventDefault()
     this.hideActivityForm(event)
@@ -222,7 +238,10 @@ class App extends React.Component {
               searchTerm={this.state.searchTerm}
               handleChange={this.handleChange}
               addNewEvent={this.addNewEvent}
-              addNewActivity={this.addNewActivity} />
+              addNewActivity={this.addNewActivity}
+              addNewActivityForm={this.addNewActivityForm}
+              hideNewActivityForm={this.hideNewActivityForm}
+              showActivityForm={this.state.showActivityForm}/>
             ) }}/>
         </Switch>
       </div>

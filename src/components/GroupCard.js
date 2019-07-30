@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export default class GroupCard extends React.Component {
+
   render() {
     const { name, users, id, creator } = this.props.group
 

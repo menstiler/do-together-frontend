@@ -23,7 +23,7 @@ export default class GroupForm extends React.Component {
       body: JSON.stringify({
         group: {
           name: this.state.name,
-          creator: this.props.currentUser.id
+          creator: this.props.currentUser.name
         }
       })
     })
