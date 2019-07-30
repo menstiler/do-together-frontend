@@ -40,7 +40,6 @@ export default class EventForm extends React.Component {
   }
 
   hideActivityForm = (event) => {
-    // event.preventDefault()
     this.setState({
       showActivityForm: false
     })
@@ -51,7 +50,7 @@ export default class EventForm extends React.Component {
       return (
         <div onClick={() => this.selectActivity(activity.id)} className={this.state.activity_id === activity.id ? 'user-border on card' : 'user-border off card'}>
             <div className="content">
-              <i className="right floated lemon outline icon"></i>
+              <i className={`right floated ${activity.icon} icon`}></i>
             <div className="header">
               {activity.title}
             </div>
