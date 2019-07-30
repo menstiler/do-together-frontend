@@ -8,7 +8,16 @@ export default class EventForm extends React.Component {
     group_id: this.props.group_id,
     activity_id: 0,
     img_url: '',
-    checked: false
+    checked: false,
+    showActivityForm: false
+  }
+
+  addNewActivityForm = (event) => {
+    // debugger
+    event.preventDefault()
+    this.setState({
+      showActivityForm: true
+    })
   }
 
   handleChange = (event) => {
@@ -18,8 +27,22 @@ export default class EventForm extends React.Component {
   }
 
   selectActivity = (activity_id) => {
+    if (activity_id !== this.state.activity_id) {
+      this.setState({
+        activity_id: activity_id,
+        showActivityForm: false
+      })
+    } else {
+      this.setState({
+        activity_id: 0
+      })
+    }
+  }
+
+  hideActivityForm = (event) => {
+    // event.preventDefault()
     this.setState({
-      activity_id: activity_id
+      showActivityForm: false
     })
   }
 
@@ -65,13 +88,13 @@ export default class EventForm extends React.Component {
           </div>
           {this.state.activity_id !== 0 ? this.renderRestOfForm() : null}
           <div style={{paddingTop: "1%"}}>
-            <button className="ui button" onClick={this.props.addNewActivityForm}>+</button>
+            {this.state.showActivityForm || (this.state.activity_id > 0) ? null : <button className="ui button" onClick={this.addNewActivityForm}>Create New Activity</button> }
           </div>
           <div style={{paddingTop: "1%"}}>
-            <input className="ui primary button" type="submit" value="Submit"/>
+            {this.state.showActivityForm ? null : <input className="ui primary button" type="submit" value="Submit"/> }
           </div>
         </form>
-        {this.props.showActivityForm ? < ActivityForm hideActivityForm={this.props.hideActivityForm} addNewActivity={this.props.addNewActivity} group_id={group_id} /> : null}
+        {this.state.showActivityForm ? < ActivityForm hideActivityForm={this.hideActivityForm} addNewActivity={this.props.addNewActivity} group_id={group_id} /> : null}
       </div>
     )
   }

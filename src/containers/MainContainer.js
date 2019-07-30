@@ -14,7 +14,8 @@ export default class MainContainer extends React.Component {
   state = {
     newUsers: [],
     selectedGroup: null,
-    newEvent: false
+    newEvent: false,
+    activities: []
   }
 
 
@@ -101,7 +102,7 @@ export default class MainContainer extends React.Component {
               showActivityForm={this.props.showActivityForm}
               addNewEvent={this.props.addNewEvent}
               events={this.removeDuplicates(this.props.groups.map(group => group.events).flat(), "id")}
-              activities={this.removeDuplicates(this.props.groups.map(group => group.activities).flat(), "id")}
+              activities={this.props.activities}
               />)
             }} />
           <Route path="/events" render={() => {

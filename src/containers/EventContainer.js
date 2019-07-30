@@ -5,7 +5,6 @@ import EventShow from '../components/EventShow'
 export default class EventContainer extends React.Component {
 
   render() {
-    debugger
     return (
       <div className="event-row">
         < EventList events={this.props.events}

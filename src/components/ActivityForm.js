@@ -17,7 +17,10 @@ export default class ActivityForm extends React.Component {
 
     return (
       <div style={{paddingTop: "1%"}}>
-        <form onSubmit={(event) => this.props.addNewActivity(event, title, location, this.props.group_id)}>
+        <form onSubmit={(event) => {
+          this.props.addNewActivity(event, title, location, this.props.group_id)
+          this.props.hideActivityForm()
+        }}>
           <h2>Add New Activity</h2>
           <h3>Title:</h3>
           <div className="ui input">
@@ -28,7 +31,7 @@ export default class ActivityForm extends React.Component {
             <input type="text" name="location" value={location} onChange={this.handleChange} placeholder="Location" />
           </div>
           <div style={{paddingTop: "1%"}}>
-            <input type="submit" value="Submit" className="ui primary button" />
+            <input type="submit" value="Create New Activity" className="ui primary button" />
           </div>
         </form>
       </div>

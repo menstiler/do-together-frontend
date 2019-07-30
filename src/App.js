@@ -14,8 +14,8 @@ class App extends React.Component {
     groups: [],
     newEvent: false,
     searchTerm: '',
-    showActivityForm: false,
     selectedEvent: 1,
+    activities: []
   }
 
   selectEvent = (id) => {
@@ -43,6 +43,14 @@ class App extends React.Component {
         .then(user => {
           this.setState({
             currentUser: user
+          }, () => {
+            fetch(`http://localhost:3000/activities`)
+            .then(resp => resp.json())
+            .then(activities => {
+              this.setState({
+                  activities: activities
+              })
+            })
           })
         })
       })
@@ -129,24 +137,9 @@ class App extends React.Component {
     })
   }
 
-  addNewActivityForm = (event) => {
-    debugger
-    event.preventDefault()
-    this.setState({
-      showActivityForm: true
-    })
-  }
-
-  hideActivityForm = (event) => {
-    event.preventDefault()
-    this.setState({
-      showActivityForm: false
-    })
-  }
-
   addNewActivity = (event, title, location, group_id) => {
     event.preventDefault()
-    this.hideActivityForm(event)
+    // this.hideActivityForm(event)
 
     fetch('http://localhost:3000/activities', {
       method: "POST",
@@ -161,17 +154,9 @@ class App extends React.Component {
     })
     .then(res => res.json())
     .then(activity => {
-      let updatedGroups = this.state.groups.map(group => {
-        if (group.id === group_id) {
-          group.activities.push(activity)
-          activity.groups.push(group)
-          return group
-        } else {
-          return group
-        }
-      })
+      let updatedActivities = [...this.state.activities, activity]
       this.setState({
-        groups: updatedGroups
+        activities: updatedActivities
       })
     })
   }
@@ -252,6 +237,7 @@ class App extends React.Component {
               addNewActivityForm={this.addNewActivityForm}
               hideNewActivityForm={this.hideNewActivityForm}
               showActivityForm={this.state.showActivityForm}
+              activities={this.state.activities}
               />
             ) }}/>
         </Switch>
