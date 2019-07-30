@@ -15,9 +15,9 @@ export default class ControllerContainer extends React.Component {
         </div>
         <div className="item right">
         <div class="ui buttons">
-          <Link to="/groups"><button className="ui button" onClick={this.props.handleChange} value="">Groups</button></Link>
+          <Link to="/groups"><button className="ui button" onClick={this.props.handleChange} value="" style={{backgroundColor: "#b0deff"}}>Groups</button></Link>
           <div class="or"></div>
-          <Link to="/events"><button className="ui button" onClick={this.props.handleChange} value="">Events</button></Link>
+          <Link to="/events"><button className="ui button" onClick={this.props.handleChange} value="" style={{backgroundColor: "#b0deff"}}>Events</button></Link>
         </div>
         </div>
       </div>

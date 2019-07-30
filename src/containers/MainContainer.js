@@ -43,7 +43,6 @@ export default class MainContainer extends React.Component {
   }
 
   render() {
-    console.log(this.state.groups)
     return (
       <div >
         <Switch>
@@ -83,6 +82,7 @@ export default class MainContainer extends React.Component {
             return (
               <>
               < ControllerContainer handleChange={this.props.handleChange} searchTerm={this.props.searchTerm}/>
+              <h3 style={{paddingLeft: "1%"}}>All Groups</h3>
               < GroupContainer groups={this.props.groups}
                searchTerm={this.props.searchTerm}
                currentUser={this.props.currentUser}
@@ -108,6 +108,7 @@ export default class MainContainer extends React.Component {
             return(
               <>
                 < ControllerContainer handleChange={this.props.handleChange} searchTerm={this.props.searchTerm}/>
+                <h3 style={{paddingLeft: "1%"}}>All Events</h3>
                 <div>
                   < EventContainer
                   events={this.props.groups.map(group => group.events).flat()}
@@ -125,11 +126,12 @@ export default class MainContainer extends React.Component {
             return (
               <>
                 < ControllerContainer handleChange={this.props.handleChange} search={this.props.searchTerm}/>
+                <h3 style={{paddingLeft: "1%"}}>All Groups</h3>
                 < GroupContainer groups={this.props.groups}
                  searchTerm={this.props.searchTerm}
                  currentUser={this.props.currentUser}
                  addUser={this.props.addUser} />
-           </>
+              </>
          )}} />
         </Switch>
       </div>
