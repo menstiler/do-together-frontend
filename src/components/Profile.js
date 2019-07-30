@@ -31,20 +31,19 @@ class Profile extends React.Component {
   render() {
     return (
       <div id="profile">
-        <div class="ui card">
-          <a class="image" href="#">
-          </a>
-          <div class="content">
-            <a class="header" href="#">{this.props.currentUser.name}</a>
+        <div className="ui card">
+          <div className="content name-card">
+            <h3 style={{margin: "0"}}>{this.props.currentUser.name}</h3>
+            <img className="ui avatar image icons" src={`/icons/${this.props.currentUser.image}`} alt="" />
           </div>
         </div>
-        <h3>My Groups</h3>
+        <h3 className="headers">My Groups</h3>
           < GroupContainer groups={this.state.groups}
            currentUser={this.props.currentUser}
            addUser={this.props.addUser}
            addGroup={this.props.addGroup}
            searchTerm="" />
-        <h3>Upcoming Events</h3>
+        <h3 className="headers">Upcoming Events</h3>
         {this.state.events.length > 0 ?
         < EventContainer events={this.state.events}
         searchTerm=""

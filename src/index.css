@@ -31,6 +31,31 @@ code {
   width: 90%;
 }
 
-#profile, #event-card, #create-group, #group-show, #add-users, #new-event {
+.headers {
+  display: flex;
+  justify-content: center;
+}
+
+.name-card {
+  display: flex;
+  justify-content: space-between;
+}
+
+.icons {
+  margin-left: 40%;
+}
+
+.ui.card img.avatar, .ui.cards>.card img.avatar {
+    width: 3em;
+    height: 3em;
+    border-radius: 500rem;
+}
+
+#create-group {
+  padding: 1% 25%;
+
+}
+
+#profile, #event-card, #group-show, #add-users, #new-event {
   padding: 1%;
 }
