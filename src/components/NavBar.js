@@ -11,10 +11,9 @@ function NavBar(props) {
           <i className="lemon outline icon"></i>
           Do Together
         </div>
-        <Link to="/" ><a className="item ">
+        <Link to="/" className="item " >
         <i className="home icon"></i>
-        Home
-        </a></Link>
+        Home</Link>
 
         {
           props.currentUser !== null ?
@@ -40,17 +39,13 @@ function NavBar(props) {
         </a>
         :
         <div className="menu right">
-          <a className="item">
+          <a className="item" onClick={props.login}>
             <i className="user icon icon"></i>
-            <Link to="/login">
             <a style={{color: "black"}}>Login</a>
-            </Link>
           </a>
-          <a className="item">
+          <a className="item" onClick={props.signup}>
             <i className="child icon icon"></i>
-            <Link to="/signup">
             <a style={{color: "black"}}>Signup</a>
-            </Link>
           </a>
         </div>
       }

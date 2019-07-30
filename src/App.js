@@ -35,6 +35,10 @@ class App extends React.Component {
      this.props.history.push("/login")
    }
 
+  signup = () => {
+    this.props.history.push("/signup")
+  }
+
    logout = () => {
      this.setState({
        currentUser: null
@@ -264,7 +268,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <NavBar currentUser={this.state.currentUser} logout={this.logout} login={this.login} routerProps={this.props.routerProps} />
+        <NavBar currentUser={this.state.currentUser} logout={this.logout} login={this.login} signup={this.signup} routerProps={this.props.routerProps} />
         <Switch>
           <Route path="/signup" render={() => < SignupForm setUser={this.setUser}/>} />
           <Route path="/login" render={() => <LoginForm setUser={this.setUser}/>}/>
