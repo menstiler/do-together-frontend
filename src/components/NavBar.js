@@ -3,7 +3,7 @@ import { Link, Route, Switch, Redirect } from 'react-router-dom'
 function NavBar() {
   return (
     <div>
-      <div className="ui labeled icon menu">
+      <div className="ui labeled icon menu" style={{backgroundColor: "#fff8a6"}}>
         <div className="header item">
           <i className="lemon outline icon"></i>
           Do Together

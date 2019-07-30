@@ -36,7 +36,7 @@ export default class GroupForm extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="create-group">
         <h3>Create new Group</h3>
         <form onSubmit={this.handleSubmit} className="ui form">
           <div className="field">

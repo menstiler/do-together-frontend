@@ -48,12 +48,15 @@ export default class AddUsers extends React.Component {
   render() {
 
     return (
-      <div>
+      <div id="add-users">
+        <h2>Add Members</h2>
         <form onSubmit={(event) => this.handleSubmit(event, this.props.selectedGroup, this.state.newUsers)}>
           <div className="ui cards">
           {this.renderUsers()}
           </div>
-          <input type="submit" value="Add Members" />
+          <div style={{paddingTop: "1%"}}>
+            <input type="submit" value="Add Members" className="ui primary button" />
+          </div>
         </form>
       </div>
     )
