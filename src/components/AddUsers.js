@@ -57,7 +57,10 @@ export default class AddUsers extends React.Component {
 
     return (
       <div id="add-users">
-      <input value={this.state.search} onChange={this.handleChange} />
+        <div class="ui icon input">
+          <input value={this.state.search} onChange={this.handleChange} placeholder="Search" />
+          <i class="search icon"></i>
+        </div>
         <h2>Add Members</h2>
         <form onSubmit={(event) => this.handleSubmit(event, this.props.selectedGroup, this.state.newUsers)}>
           <div className="ui cards">
