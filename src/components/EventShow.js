@@ -19,10 +19,10 @@ export default class EventShow extends React.Component {
 
   render() {
     const { name, group, time, activity, creator } = this.props.selectedEvent
-    this.findLongLat()
+
     return (
       <div id="event-details">
-        <div>
+        <div className="ui card">
           <div class="content">
             <div class="header">{this.props.parent === 'groupShow' ? null : <h3>{name}</h3>}</div>
             <div class="meta">
@@ -35,13 +35,8 @@ export default class EventShow extends React.Component {
               <p>{activity.location}</p>
             </div>
           </div>
-          <div class="extra content">
-          <div class="right floated author">
-            <img class="ui avatar image" src="/images/avatar/small/matt.jpg" alt="" />
-          </div>
         </div>
       </div>
-    </div>
     )
   }
 }
