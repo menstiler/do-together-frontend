@@ -55,8 +55,8 @@ export default class GroupShow extends React.Component {
         }
         <div style={{paddingTop: "1%"}}>
           <h3>Events</h3>
-          < EventList key={id} events={events} parent="groupShow" handleClick={this.handleClick} searchTerm={this.props.searchTerm} />
           <div className="event-row">
+            < EventList key={id} events={events} parent="groupShow" handleClick={this.handleClick} searchTerm={this.props.searchTerm} />
             {
               this.state.showEvent ? < EventShow parent="groupShow" selectedEvent={events.find(event => event.id === this.state.selectedEvent)}/> : null
             }
