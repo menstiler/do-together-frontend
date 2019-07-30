@@ -5,6 +5,7 @@ import NavBar from './components/NavBar'
 import Profile from './components/Profile'
 import MainContainer from './containers/MainContainer'
 import { Route, Switch } from 'react-router-dom'
+import SignupForm from './components/SignupForm'
 import LoginForm from './components/LoginForm'
 
 const API = 'http://localhost:3000'
@@ -86,6 +87,25 @@ class App extends React.Component {
           })
         })
       })
+    })
+  }
+
+  setUser = (response) => {
+    this.setState({
+      currentUser: response.user
+    }, () => {
+      localStorage.token = response.token
+      this.props.history.push("/groups")
+    })
+
+  }
+
+  logout = () => {
+    this.setState({
+      currentUser: null
+    }, () => {
+      localStorage.removeItem("token")
+      this.props.history.push("/login")
     })
   }
 
@@ -242,6 +262,7 @@ class App extends React.Component {
       <div>
         <NavBar currentUser={this.state.currentUser} logout={this.logout} />
         <Switch>
+          <Route path="/signup" render={() => < SignupForm setUser={this.setUser}/>} />
           <Route path="/login" render={() => <LoginForm setUser={this.setUser}/>}/>
           <Route path="/profile" render={() => < Profile
             currentUser={this.state.currentUser}
