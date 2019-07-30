@@ -32,7 +32,7 @@ export default class GroupShow extends React.Component {
       <div id="group-show">
         <h2 className="headers">{name}</h2>
         {
-          !users.map(user => user.id).includes(this.props.currentUser.id)
+          this.props.currentUser !== null && !users.map(user => user.id).includes(this.props.currentUser.id)
           ?
           <div className="ui labeled button" tabindex="0" onClick={() => this.props.addUser(this.props.currentUser, id)}>
             <div class="ui button blue right">
@@ -80,7 +80,7 @@ export default class GroupShow extends React.Component {
         </div>
         <div style={{padding: "1%", paddingTop: "2%"}}>
           {
-            users.map(user => user.id).includes(this.props.currentUser.id) ?
+            this.props.currentUser !== null && users.map(user => user.id).includes(this.props.currentUser.id) ?
             <div>
               <button onClick={() => this.props.passUsers(users, this.props.selectedGroup)} className="ui primary button">Add Members</button>
             </div>
@@ -90,7 +90,7 @@ export default class GroupShow extends React.Component {
         </div>
         <div style={{padding: "1%"}}>
           {
-            users.map(user => user.id).includes(this.props.currentUser.id) ?
+             this.props.currentUser !== null && users.map(user => user.id).includes(this.props.currentUser.id) ?
             <Link to={`/events/${id}/new`} ><button className="ui primary button">Create Event</button></Link>
             :
             null
@@ -98,14 +98,14 @@ export default class GroupShow extends React.Component {
         </div>
         <div style={{padding: "1%"}}>
           {
-            users.map(user => user.id).includes(this.props.currentUser.id)
+            this.props.currentUser !== null && users.map(user => user.id).includes(this.props.currentUser.id)
             ?
             < button onClick={() => this.props.removeUser(this.props.currentUser.id, id)} className="negative ui button">Leave Group</button>
             :
             null
           }
           {
-            this.props.currentUser.name === creator && users.map(user => user.id).includes(this.props.currentUser.id)
+            this.props.currentUser !== null && this.props.currentUser.name === creator && users.map(user => user.id).includes(this.props.currentUser.id)
             ?
             < button onClick={() => this.props.removeGroup(id)} className="negative ui button">Delete Group</button>
             :

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, Route, Switch, Redirect } from 'react-router-dom'
-function NavBar() {
+function NavBar(props) {
   return (
     <div>
       <div className="ui labeled icon menu" style={{backgroundColor: "#fff8a6"}}>
@@ -12,18 +12,32 @@ function NavBar() {
           <i className="home icon"></i>
           Home
         </a></Link>
-        <Link to="/profile" ><a className="item">
-          <i className="user icon"></i>
-          Profile
-        </a></Link>
+        {
+          props.currentUser !== null ?
+          <Link to="/profile" ><a className="item">
+            <i className="user icon"></i>
+            Profile
+          </a></Link>
+        :
+        null
+        }
         <Link to="/group_form" ><a className="item">
           <i className="users icon"></i>
           Create New Group
         </a></Link>
-        <a className="item right">
+        {
+          props.currentUser !== null ?
+        <a className="item right" onClick={props.logout}>
           <i className="x icon icon"></i>
           Logout
         </a>
+        :
+        <a className="item right">
+          <i className="x icon icon"></i>
+          <Link to="/login">
+          <a style={{color: "black"}}>Login</a>
+        </Link></a>
+      }
       </div>
     </div>
   )
