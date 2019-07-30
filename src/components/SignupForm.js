@@ -6,12 +6,19 @@ class SignupForm extends React.Component {
     displayName: "",
     username: "",
     password: "",
-    passwordConfirmation: ""
+    passwordConfirmation: "",
+    messages: null
   }
 
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value
+    })
+  }
+
+  closeMessage = () => {
+    this.setState({
+      messages: null
     })
   }
 
@@ -34,11 +41,12 @@ class SignupForm extends React.Component {
       .then(res => res.json())
       .then(response => {
         if(response.errors){
-          alert(response.errors)
+          this.setState({
+            messages: response.errors
+          })
         } else {
           // send them somewhere
           // storing the user object SOMEWHERE
-          debugger
           this.props.setUser(response)
         }
       })
@@ -50,15 +58,23 @@ class SignupForm extends React.Component {
 
   render(){
     return (
-      <div className="center-form">
-        <form className="auth-form" onSubmit={this.handleSubmit}>
-          <input name="username" value={this.state.username} onChange={this.handleChange} placeholder="username"/>
-          <input name="displayName" value={this.state.displayName} onChange={this.handleChange} placeholder="display name"/>
-          <input name="password" value={this.state.password} type="password" onChange={this.handleChange} placeholder="password"/>
-          <input name="passwordConfirmation" value={this.state.passwordConfirmation} type="password" onChange={this.handleChange} placeholder="password confirmation"/>
-          <button className="login" type="submit">Sign Up</button>
-        </form>
-      </div>
+      <>
+        {this.state.messages ? (
+          <div class="ui error message">
+            <i class="close icon" onClick={this.closeMessage}></i>
+            <div class="header">{this.state.messages}</div>
+          </div>
+        ) : null}
+        <div className="center-form">
+          <form className="auth-form" onSubmit={this.handleSubmit}>
+            <input name="username" value={this.state.username} onChange={this.handleChange} placeholder="username"/>
+            <input name="displayName" value={this.state.displayName} onChange={this.handleChange} placeholder="display name"/>
+            <input name="password" value={this.state.password} type="password" onChange={this.handleChange} placeholder="password"/>
+            <input name="passwordConfirmation" value={this.state.passwordConfirmation} type="password" onChange={this.handleChange} placeholder="password confirmation"/>
+            <button className="login" type="submit">Sign Up</button>
+          </form>
+        </div>
+      </>
     )
   }
 

@@ -32,11 +32,20 @@ function NavBar(props) {
           Logout
         </a>
         :
-        <a className="item right">
-          <i className="x icon icon"></i>
-          <Link to="/login">
-          <a style={{color: "black"}}>Login</a>
-        </Link></a>
+        <div className="menu right">
+          <a className="item">
+            <i className="user icon icon"></i>
+            <Link to="/login">
+            <a style={{color: "black"}}>Login</a>
+            </Link>
+          </a>
+          <a className="item">
+            <i className="child icon icon"></i>
+            <Link to="/signup">
+            <a style={{color: "black"}}>Signup</a>
+            </Link>
+          </a>
+        </div>
       }
       </div>
     </div>
