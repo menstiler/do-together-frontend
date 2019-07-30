@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import NavBar from './components/NavBar'
 import Profile from './components/Profile'
@@ -143,7 +142,6 @@ class App extends React.Component {
         if (group.id === group_id) {
           group.users.push(user)
           return group
-          console.log(group)
         } else {
           return group
         }
