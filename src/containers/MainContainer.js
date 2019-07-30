@@ -38,7 +38,7 @@ export default class MainContainer extends React.Component {
       newUsers: newUsers,
       selectedGroup: group
     }, () => {
-       this.props.history.push("/groups/add_users")
+       this.props.history.push(`/groups/${group.id}/add_users`)
     })
   }
 
@@ -48,7 +48,7 @@ export default class MainContainer extends React.Component {
       <div >
         <Switch>
 
-          <Route path="/groups/add_users" render={() => {
+          <Route path="/groups/:id/add_users" render={() => {
             return <AddUsers
                 users={this.state.newUsers}
                 addUsersToGroup={this.props.addUsersToGroup}

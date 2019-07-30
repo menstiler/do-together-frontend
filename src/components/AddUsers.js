@@ -4,7 +4,15 @@ import React from 'react'
 export default class AddUsers extends React.Component {
 
   state = {
-    newUsers: []
+    users: this.props.users,
+    newUsers: [],
+    filteredUsers: this.props.users,
+  }
+
+  handleChange = (event) => {
+    this.setState({
+      filteredUsers: this.state.users.filter(user => user.name.toLowerCase().includes(event.target.value.toLowerCase()))
+    })
   }
 
   addUser = (id) => {
@@ -23,7 +31,7 @@ export default class AddUsers extends React.Component {
   }
 
   renderUsers = () => {
-    return this.props.users.map(user => {
+    return this.state.filteredUsers.map(user => {
       return (
         <div onClick={() => this.addUser(user.id)} className={this.state.newUsers.includes(user) ? 'user-border on card' : 'user-border off card'}>
             <div className="content">
@@ -49,6 +57,7 @@ export default class AddUsers extends React.Component {
 
     return (
       <div>
+        <input value={this.state.search} onChange={this.handleChange} />
         <form onSubmit={(event) => this.handleSubmit(event, this.props.selectedGroup, this.state.newUsers)}>
           <div className="ui cards">
           {this.renderUsers()}

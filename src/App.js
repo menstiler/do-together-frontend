@@ -13,8 +13,7 @@ class App extends React.Component {
     currentUser: null,
     groups: [],
     newEvent: false,
-    searchTerm: '',
-    showActivityForm: false
+    searchTerm: ''
   }
 
   handleChange = (event) => {
@@ -84,7 +83,7 @@ class App extends React.Component {
     fetch(`http://localhost:3000/groups/${group_id}/remove_user/${user_id}`, {
       method: "DELETE"
     })
-    console.log(group_id);
+    console.log(group_id)
     this.state.groups.find(group => group.id === group_id).users.splice(this.state.groups.find(group => group.id === group_id).users.findIndex(user => user.id === this.state.currentUser.id),1)
     let updatedGroups = this.state.groups
     this.setState({
@@ -119,20 +118,6 @@ class App extends React.Component {
       this.setState({
         groups: updatedGroups,
       }, () => this.props.history.push('/groups'))
-    })
-  }
-
-  addNewActivityForm = (event) => {
-    event.preventDefault()
-    this.setState({
-      showActivityForm: true
-    })
-  }
-
-  hideActivityForm = (event) => {
-    event.preventDefault()
-    this.setState({
-      showActivityForm: false
     })
   }
 
@@ -185,8 +170,7 @@ class App extends React.Component {
         name: name,
         time: time,
         group_id: group_id,
-        activity_id: activity_id,
-        creator: this.state.currentUser.name
+        activity_id: activity_id
       })
     })
     .then(res => res.json())
@@ -238,10 +222,7 @@ class App extends React.Component {
               searchTerm={this.state.searchTerm}
               handleChange={this.handleChange}
               addNewEvent={this.addNewEvent}
-              addNewActivity={this.addNewActivity}
-              addNewActivityForm={this.addNewActivityForm}
-              hideActivityForm={this.hideActivityForm}
-              showActivityForm={this.state.showActivityForm} />
+              addNewActivity={this.addNewActivity} />
             ) }}/>
         </Switch>
       </div>
