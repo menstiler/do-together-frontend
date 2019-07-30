@@ -20,7 +20,8 @@ class LoginForm extends React.Component {
     })
   }
 
-  handleSubmit = e => {
+
+  handleSubmit = (e) => {
     e.preventDefault()
 
     fetch("http://localhost:3000/login", {

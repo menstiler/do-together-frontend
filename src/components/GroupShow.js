@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 export default class GroupShow extends React.Component {
 
   state = {
-    selectedEvent: this.props.selectedGroup.events[0].id,
+    selectedEvent: this.props.selectedGroup.events.length > 0 ? this.props.selectedGroup.events[0].id : null,
     showEvent: true
   }
 
@@ -44,6 +44,8 @@ export default class GroupShow extends React.Component {
             </a>
           </div>
           :
+          null}
+          { this.props.currentUser !== null && users.map(user => user.id).includes(this.props.currentUser.id) ?
           <div className="ui labeled disabled button" tabindex="0" onClick={() => this.props.addUser(this.props.currentUser, id)}>
             <div class="ui button blue right">
               <i class="users icon"></i>
@@ -53,13 +55,15 @@ export default class GroupShow extends React.Component {
               {users.length}
             </a>
           </div>
+          :
+          null
         }
         <div style={{paddingTop: "1%"}}>
           <h3 className="headers">Events</h3>
           <div className="event-row">
             < EventList key={id} events={events} parent="groupShow" handleClick={this.handleClick} searchTerm={this.props.searchTerm} />
             {
-              this.state.showEvent ? < EventShow parent="groupShow" selectedEvent={events.find(event => event.id === this.state.selectedEvent)}/> : null
+              this.state.showEvent && this.state.selectedEvent !== null ? < EventShow parent="groupShow" selectedEvent={events.find(event => event.id === this.state.selectedEvent)}/> : null
             }
           </div>
         </div>
@@ -78,17 +82,13 @@ export default class GroupShow extends React.Component {
             }) }
           </div>
         </div>
-        <div style={{padding: "1%", paddingTop: "2%"}}>
-          {
-            this.props.currentUser !== null && users.map(user => user.id).includes(this.props.currentUser.id) ?
-            <div>
-              <button onClick={() => this.props.passUsers(users, this.props.selectedGroup)} className="ui primary button">Add Members</button>
-            </div>
-            :
-            null
-          }
-        </div>
         <div style={{padding: "1%"}}>
+        {
+          this.props.currentUser !== null && users.map(user => user.id).includes(this.props.currentUser.id) ?
+            <button onClick={() => this.props.passUsers(users, this.props.selectedGroup)} className="ui primary button">Add Members</button>
+          :
+          null
+        }
           {
              this.props.currentUser !== null && users.map(user => user.id).includes(this.props.currentUser.id) ?
             <Link to={`/events/${id}/new`} ><button className="ui primary button">Create Event</button></Link>

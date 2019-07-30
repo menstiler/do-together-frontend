@@ -21,7 +21,6 @@ class Profile extends React.Component {
     fetch(`http://localhost:3000/users/${this.props.currentUser.id}`)
     .then(resp => resp.json())
     .then(user => {
-      debugger
       this.setState({
         events: user.events,
         groups: user.groups,
