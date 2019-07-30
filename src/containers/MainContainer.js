@@ -82,7 +82,7 @@ export default class MainContainer extends React.Component {
             return (
               <>
               < ControllerContainer handleChange={this.props.handleChange} searchTerm={this.props.searchTerm}/>
-              <h3 style={{paddingLeft: "1%"}}>All Groups</h3>
+              <h3 className="headers" style={{paddingLeft: "1%"}}>All Groups</h3>
               < GroupContainer groups={this.props.groups}
                searchTerm={this.props.searchTerm}
                currentUser={this.props.currentUser}
@@ -126,7 +126,7 @@ export default class MainContainer extends React.Component {
             return (
               <>
                 < ControllerContainer handleChange={this.props.handleChange} search={this.props.searchTerm}/>
-                <h3 style={{paddingLeft: "1%"}}>All Groups</h3>
+                <h3 className="headers" style={{paddingLeft: "1%"}}>All Groups</h3>
                 < GroupContainer groups={this.props.groups}
                  searchTerm={this.props.searchTerm}
                  currentUser={this.props.currentUser}

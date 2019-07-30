@@ -35,7 +35,7 @@ export default class AddUsers extends React.Component {
       return (
         <div onClick={() => this.addUser(user.id)} className={this.state.newUsers.includes(user) ? 'user-border on card' : 'user-border off card'}>
             <div className="content">
-              <img className="right floated mini ui image" src={user.image} />
+              <img className="ui avatar image right floated" src={`/icons/${user.image}`} alt="" />
             <div className="header">
               {user.name}
             </div>

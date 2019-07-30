@@ -26,10 +26,11 @@ export default class GroupShow extends React.Component {
 
   render() {
     const { name, users, activities, events, id, creator } = this.props.selectedGroup
+    console.log(users)
 
     return (
       <div id="group-show">
-        <h2>{name}</h2>
+        <h2 className="headers">{name}</h2>
         {
           !users.map(user => user.id).includes(this.props.currentUser.id)
           ?
@@ -54,7 +55,7 @@ export default class GroupShow extends React.Component {
           </div>
         }
         <div style={{paddingTop: "1%"}}>
-          <h3>Events</h3>
+          <h3 className="headers">Events</h3>
           < EventList key={id} events={events} parent="groupShow" handleClick={this.handleClick} searchTerm={this.props.searchTerm} />
           <div className="event-row">
             {
@@ -63,16 +64,14 @@ export default class GroupShow extends React.Component {
           </div>
         </div>
         <div>
-          <h3>Members</h3>
+          <h3 className="headers">Members</h3>
           <div className="ui cards">
           {users.map(user => {
               return  (
-                <div className="card">
-                <div className="content">
-                  <img className="right floated mini ui image" src={user.image} alt="" />
-                <div className="header">
-                  {user.name}
-                </div>
+                <div className="ui card">
+                <div className="content name-card">
+                  <h3 style={{margin: "0"}}>{user.name}</h3>
+                  <img className="ui avatar image icons" src={`/icons/${user.image}`} alt="" />
                 </div>
               </div>
               )
