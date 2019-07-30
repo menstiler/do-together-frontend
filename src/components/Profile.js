@@ -1,6 +1,7 @@
 import React from 'react'
 import GroupContainer from '../containers/GroupContainer'
 import EventContainer from '../containers/EventContainer'
+import { Link } from 'react-router-dom'
 class Profile extends React.Component {
 
   state = {
@@ -17,13 +18,14 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:3000/users/1')
+    fetch(`http://localhost:3000/users/${this.props.currentUser.id}`)
     .then(resp => resp.json())
     .then(user => {
+      debugger
       this.setState({
         events: user.events,
         groups: user.groups,
-        selectedEvent: user.events[0].id
+        selectedEvent: user.events.length > 0 ? user.events[0].id : null
       })
     })
   }
@@ -38,11 +40,18 @@ class Profile extends React.Component {
           </div>
         </div>
         <h3 className="headers">My Groups</h3>
+        {
+          this.state.groups.length > 0 ?
           < GroupContainer groups={this.state.groups}
            currentUser={this.props.currentUser}
            addUser={this.props.addUser}
            addGroup={this.props.addGroup}
            searchTerm="" />
+           :
+           <div className="centerItem">
+           <Link to="/groups" ><button className="ui primary button">Join a Group</button></Link>
+           </div>
+         }
         <h3 className="headers">Upcoming Events</h3>
         {this.state.events.length > 0 ?
         < EventContainer events={this.state.events}
@@ -50,7 +59,9 @@ class Profile extends React.Component {
         selectedEvent={this.state.selectedEvent}
         selectEvent={this.selectEvent}/>
         :
-        null }
+        <div className="centerItem">
+        "You have no upcoming events"
+        </div>}
       </div>
     )
   }

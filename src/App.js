@@ -6,8 +6,9 @@ import Profile from './components/Profile'
 import MainContainer from './containers/MainContainer'
 import { Route, Switch } from 'react-router-dom'
 import SignupForm from './components/SignupForm'
+import LoginForm from './components/LoginForm'
 
-const API = 'http://localhost:3000/groups'
+const API = 'http://localhost:3000'
 
 class App extends React.Component {
 
@@ -19,6 +20,25 @@ class App extends React.Component {
     selectedEvent: 1,
     activities: []
   }
+
+    setUser = (response) => {
+     this.setState({
+       currentUser: response.user
+     }, () => {
+       localStorage.token = response.token
+       this.props.history.push("/groups")
+     })
+
+   }
+
+   logout = () => {
+     this.setState({
+       currentUser: null
+     }, () => {
+       localStorage.removeItem("token")
+       this.props.history.push("/login")
+     })
+   }
 
   selectEvent = (id) => {
     this.setState({
@@ -33,26 +53,37 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    localStorage.user_id = 1
-    fetch(API)
+    const token = localStorage.token
+    // localStorage.user_id = 1
+    if (token) {
+      fetch(API + "/auto_login", {
+        headers: {
+          "Authorization": token
+        }
+      })
+      .then(res => res.json())
+      .then(response => {
+        if (response.errors){
+          alert(response.errors)
+        } else {
+          this.setState({
+            currentUser: response
+          })
+        }
+      })
+    }
+
+    fetch(API + "/groups")
     .then(resp => resp.json())
     .then(groups => {
       this.setState({
         groups: groups,
       }, () => {
-        fetch(`http://localhost:3000/users/${localStorage.user_id}`)
+        fetch(API + "/activities")
         .then(resp => resp.json())
-        .then(user => {
+        .then(activities => {
           this.setState({
-            currentUser: user
-          }, () => {
-            fetch(`http://localhost:3000/activities`)
-            .then(resp => resp.json())
-            .then(activities => {
-              this.setState({
-                  activities: activities
-              })
-            })
+              activities: activities
           })
         })
       })
@@ -229,9 +260,10 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <NavBar currentUser={this.state.currentUser} />
+        <NavBar currentUser={this.state.currentUser} logout={this.logout} />
         <Switch>
           <Route path="/signup" render={() => < SignupForm setUser={this.setUser}/>} />
+          <Route path="/login" render={() => <LoginForm setUser={this.setUser}/>}/>
           <Route path="/profile" render={() => < Profile
             currentUser={this.state.currentUser}
             searchTerm={this.state.searchTerm}
