@@ -14,9 +14,9 @@ export default class MainContainer extends React.Component {
   state = {
     newUsers: [],
     selectedGroup: null,
-    selectedEvent: 1,
     newEvent: false
   }
+
 
   changeToEventForm = () => {
     this.setState({
@@ -111,6 +111,8 @@ export default class MainContainer extends React.Component {
                 <h3 style={{paddingLeft: "1%"}}>All Events</h3>
                 <div>
                   < EventContainer
+                  selectEvent={this.props.selectEvent}
+                  selectedEvent={this.props.selectedEvent}
                   events={this.props.groups.map(group => group.events).flat()}
                   searchTerm={this.props.searchTerm} />
                 </div>

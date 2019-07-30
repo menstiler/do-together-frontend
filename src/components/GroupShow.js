@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom'
 export default class GroupShow extends React.Component {
 
   state = {
-    selectedEvent: null,
-    showEvent: false
+    selectedEvent: this.props.selectedGroup.events[0].id,
+    showEvent: true
   }
 
   handleClick = (id) => {
@@ -56,8 +56,8 @@ export default class GroupShow extends React.Component {
         }
         <div style={{paddingTop: "1%"}}>
           <h3 className="headers">Events</h3>
-          < EventList key={id} events={events} parent="groupShow" handleClick={this.handleClick} searchTerm={this.props.searchTerm} />
           <div className="event-row">
+            < EventList key={id} events={events} parent="groupShow" handleClick={this.handleClick} searchTerm={this.props.searchTerm} />
             {
               this.state.showEvent ? < EventShow parent="groupShow" selectedEvent={events.find(event => event.id === this.state.selectedEvent)}/> : null
             }
