@@ -44,6 +44,8 @@ export default class GroupShow extends React.Component {
             </a>
           </div>
           :
+          null}
+          { this.props.currentUser !== null && users.map(user => user.id).includes(this.props.currentUser.id) ?
           <div className="ui labeled disabled button" tabindex="0" onClick={() => this.props.addUser(this.props.currentUser, id)}>
             <div class="ui button blue right">
               <i class="users icon"></i>
@@ -53,6 +55,8 @@ export default class GroupShow extends React.Component {
               {users.length}
             </a>
           </div>
+          :
+          null
         }
         <div style={{paddingTop: "1%"}}>
           <h3 className="headers">Events</h3>
