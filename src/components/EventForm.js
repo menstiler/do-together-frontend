@@ -26,8 +26,13 @@ export default class EventForm extends React.Component {
   renderActivities = () => {
     return this.props.activities.map(activity => {
       return (
-        <div onClick={() => this.selectActivity(activity.id)} className={this.state.activity_id === activity.id ? 'user-border on' : 'user-border off'}>
-          <div>{activity.title}</div>
+        <div onClick={() => this.selectActivity(activity.id)} className={this.state.activity_id === activity.id ? 'user-border on card' : 'user-border off card'}>
+            <div className="content">
+              <i className="right floated lemon outline icon"></i>
+            <div className="header">
+              {activity.title}
+            </div>
+            </div>
         </div>
       )
     })
@@ -36,14 +41,14 @@ export default class EventForm extends React.Component {
   renderRestOfForm = () => {
     return (
       <React.Fragment>
-      <label>
-        Event Name:
-        <input type="text" name="name" value={this.state.name} onChange={this.handleChange} placeholder="Name" />
-      </label>
-      <label>
-        Date:
-        <input type="datetime-local" name="time" value={this.state.time} onChange={this.handleChange} placeholder="Date" />
-      </label>
+        <h3>Event Name:</h3>
+        <div className="ui input">
+          <input type="text" name="name" value={this.state.name} onChange={this.handleChange} placeholder="Name" />
+        </div>
+        <h3>Date:</h3>
+        <div className="ui input">
+          <input type="datetime-local" name="time" value={this.state.time} onChange={this.handleChange} placeholder="Date" />
+        </div>
       </React.Fragment>
     )
   }
@@ -51,14 +56,20 @@ export default class EventForm extends React.Component {
   render() {
     const { name, time, group_id, activity_id, img_url } = this.state
     return (
-      <div>
+      <div id="new-event">
+        <h2>Create New Event</h2>
         <form onSubmit={(event) => this.props.addNewEvent(event, name, time, group_id, activity_id, img_url)}>
-          {this.renderActivities()}
-          {this.state.activity_id !== 0 ? this.renderRestOfForm() : null}
-          <div>
-            <button onClick={this.props.addNewActivityForm}>+</button>
+          <h3>Activities:</h3>
+          <div className="ui cards">
+            {this.renderActivities()}
           </div>
-          <input className="ui primary button" type="submit" value="Submit"/>
+          {this.state.activity_id !== 0 ? this.renderRestOfForm() : null}
+          <div style={{paddingTop: "1%"}}>
+            <button className="ui button" onClick={this.props.addNewActivityForm}>+</button>
+          </div>
+          <div style={{paddingTop: "1%"}}>
+            <input className="ui primary button" type="submit" value="Submit"/>
+          </div>
         </form>
         {this.props.showActivityForm ? < ActivityForm hideActivityForm={this.props.hideActivityForm} addNewActivity={this.props.addNewActivity} group_id={group_id} /> : null}
       </div>

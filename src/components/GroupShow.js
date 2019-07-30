@@ -26,31 +26,41 @@ export default class GroupShow extends React.Component {
 
   render() {
     const { name, users, activities, events, id, creator } = this.props.selectedGroup
+
     return (
-      <div>
+      <div id="group-show">
         <h2>{name}</h2>
-        <div>
         {
-          users.map(user => user.id).includes(this.props.currentUser.id)
+          !users.map(user => user.id).includes(this.props.currentUser.id)
           ?
-          < button onClick={() => this.props.removeUser(this.props.currentUser.id, id)}>Leave Group</button>
+          <div className="ui labeled button" tabindex="0" onClick={() => this.props.addUser(this.props.currentUser, id)}>
+            <div class="ui button blue right">
+              <i class="child icon"></i>
+              Join Group
+            </div>
+            <a class="ui basic label" >
+              {users.length}
+            </a>
+          </div>
           :
-          < button onClick={() => this.props.addUser(this.props.currentUser, id)}>Join Group</button>
+          <div className="ui labeled disabled button" tabindex="0" onClick={() => this.props.addUser(this.props.currentUser, id)}>
+            <div class="ui button blue right">
+              <i class="users icon"></i>
+              Joined Group
+            </div>
+            <a class="ui basic label" >
+              {users.length}
+            </a>
+          </div>
         }
-        {
-          this.props.currentUser.id === parseInt(creator) && users.map(user => user.id).includes(this.props.currentUser.id)
-          ?
-          < button onClick={() => this.props.removeGroup(id)}>Delete Group</button>
-          :
-          null
-        }
-        </div>
-        <div>
+        <div style={{paddingTop: "1%"}}>
           <h3>Events</h3>
           < EventList key={id} events={events} parent="groupShow" handleClick={this.handleClick} searchTerm={this.props.searchTerm} />
-          {
-            this.state.showEvent ? < EventShow parent="groupShow" selectedEvent={events.find(event => event.id === this.state.selectedEvent)}/> : null
-          }
+          <div className="event-row">
+            {
+              this.state.showEvent ? < EventShow parent="groupShow" selectedEvent={events.find(event => event.id === this.state.selectedEvent)}/> : null
+            }
+          </div>
         </div>
         <div>
           <h3>Members</h3>
@@ -59,7 +69,7 @@ export default class GroupShow extends React.Component {
               return  (
                 <div className="card">
                 <div className="content">
-                  <img className="right floated mini ui image" src={user.image} />
+                  <img className="right floated mini ui image" src={user.image} alt="" />
                 <div className="header">
                   {user.name}
                 </div>
@@ -68,23 +78,41 @@ export default class GroupShow extends React.Component {
               )
             }) }
           </div>
+        </div>
+        <div style={{padding: "1%", paddingTop: "2%"}}>
           {
             users.map(user => user.id).includes(this.props.currentUser.id) ?
             <div>
-              <button onClick={() => this.props.passUsers(users, this.props.selectedGroup)}>Add Members</button>
+              <button onClick={() => this.props.passUsers(users, this.props.selectedGroup)} className="ui primary button">Add Members</button>
             </div>
             :
             null
           }
         </div>
-        <span>
-        {
-          users.map(user => user.id).includes(this.props.currentUser.id) ?
-          <Link to={`/events/${id}/new`} ><button onClick={this.props.changeToEventForm}>Create Event</button></Link>
-          :
-          null
-        }
-        </span>
+        <div style={{padding: "1%"}}>
+          {
+            users.map(user => user.id).includes(this.props.currentUser.id) ?
+            <Link to={`/events/${id}/new`} ><button onClick={this.props.changeToEventForm} className="ui primary button">Create Event</button></Link>
+            :
+            null
+          }
+        </div>
+        <div style={{padding: "1%"}}>
+          {
+            users.map(user => user.id).includes(this.props.currentUser.id)
+            ?
+            < button onClick={() => this.props.removeUser(this.props.currentUser.id, id)} className="negative ui button">Leave Group</button>
+            :
+            null
+          }
+          {
+            this.props.currentUser.id === parseInt(creator) && users.map(user => user.id).includes(this.props.currentUser.id)
+            ?
+            < button onClick={() => this.props.removeGroup(id)} className="negative ui button">Delete Group</button>
+            :
+            null
+          }
+        </div>
       </div>
     )
   }

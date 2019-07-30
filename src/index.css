@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f2f4f6;
 }
 
 code {
@@ -12,18 +13,17 @@ code {
     monospace;
 }
 
-#event-row {
+.event-row {
   display: flex;
   flex-direction: row;
-  padding-left: 2%;
-  padding-top: 2%;
+  padding: 2%;
 }
 
 #group-row {
   display: flex;
   flex-direction: row;
-  padding-left: 2%;
-  padding-top: 2%;
+  justify-content: center;
+  padding: 2%;
 }
 
 #event-details {
@@ -31,6 +31,6 @@ code {
   width: 90%;
 }
 
-#profile {
+#profile, #event-card, #create-group, #group-show, #add-users, #new-event {
   padding: 1%;
 }
