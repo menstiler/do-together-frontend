@@ -195,7 +195,7 @@ class App extends React.Component {
     })
   }
 
-  addNewActivity = (event, title, location, group_id) => {
+  addNewActivity = (event, title, location, icon, image, group_id) => {
     event.preventDefault()
     // this.hideActivityForm(event)
 
@@ -207,7 +207,9 @@ class App extends React.Component {
       },
       body: JSON.stringify({
         title: title,
-        location: location
+        location: location,
+        icon: icon,
+        image: image
       })
     })
     .then(res => res.json())

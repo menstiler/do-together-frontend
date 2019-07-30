@@ -1,8 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Route, Switch, Redirect } from 'react-router-dom'
+
 function NavBar(props) {
-
-
 
   return (
     <div>

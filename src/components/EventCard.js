@@ -3,12 +3,12 @@ import React from 'react'
 export default class EventCard extends React.Component {
 
   render() {
-    const { name, group, id } = this.props.eventItem
+    const { name, group, id, activity } = this.props.eventItem
     return (
       <div onClick={() => this.props.handleClick(id)} className="ui card" id="event-card">
         <div className="card">
           <div className="content">
-            <i className="right floated lemon outline icon"></i>
+            <i className={`right floated ${activity.icon} icon`}></i>
           <div className="header">
             {name}
           </div>
