@@ -6,7 +6,14 @@ class Profile extends React.Component {
   state = {
     events: [],
     groups: [],
-    file: null
+    file: null,
+    selectedEvent: null
+  }
+
+  selectEvent = (id) => {
+    this.setState({
+      selectedEvent: id,
+    })
   }
 
   componentDidMount() {
@@ -15,17 +22,18 @@ class Profile extends React.Component {
     .then(user => {
       this.setState({
         events: user.events,
-        groups: user.groups
+        groups: user.groups,
+        selectedEvent: user.events[0].id
       })
     })
   }
 
   render() {
+    debugger
     return (
       <div id="profile">
         <div class="ui card">
           <a class="image" href="#">
-            <img src={this.props.currentUser.image}/>
           </a>
           <div class="content">
             <a class="header" href="#">{this.props.currentUser.name}</a>
@@ -38,8 +46,13 @@ class Profile extends React.Component {
            addGroup={this.props.addGroup}
            searchTerm="" />
         <h3>Upcoming Events</h3>
+        {this.state.events.length > 0 ?
         < EventContainer events={this.state.events}
-        searchTerm="" />
+        searchTerm=""
+        selectedEvent={this.state.selectedEvent}
+        selectEvent={this.selectEvent}/>
+        :
+        null }
       </div>
     )
   }

@@ -14,7 +14,14 @@ class App extends React.Component {
     groups: [],
     newEvent: false,
     searchTerm: '',
-    showActivityForm: false
+    showActivityForm: false,
+    selectedEvent: 1,
+  }
+
+  selectEvent = (id) => {
+    this.setState({
+      selectedEvent: id,
+    })
   }
 
   handleChange = (event) => {
@@ -220,11 +227,14 @@ class App extends React.Component {
         <Switch>
           <Route path="/profile" render={() => < Profile
             currentUser={this.state.currentUser}
-            searchTerm={this.state.searchTerm} />
+            searchTerm={this.state.searchTerm}
+            />
           } />
           <Route path="/" render={(routerProps) => {
             return (
               <MainContainer currentUser={this.state.currentUser}
+              selectedEvent={this.state.selectedEvent}
+              selectEvent={this.selectEvent}
               addUser={this.addUser}
               addGroup={this.addGroup}
               handleClick={this.selectEvent}
@@ -241,7 +251,8 @@ class App extends React.Component {
               addNewActivity={this.addNewActivity}
               addNewActivityForm={this.addNewActivityForm}
               hideNewActivityForm={this.hideNewActivityForm}
-              showActivityForm={this.state.showActivityForm}/>
+              showActivityForm={this.state.showActivityForm}
+              />
             ) }}/>
         </Switch>
       </div>

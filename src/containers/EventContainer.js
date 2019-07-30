@@ -4,24 +4,15 @@ import EventShow from '../components/EventShow'
 
 export default class EventContainer extends React.Component {
 
-  state = {
-    selectedEvent: null,
-  }
-
-  selectEvent = (id) => {
-    this.setState({
-      selectedEvent: id
-    })
-  }
-
   render() {
+    debugger
     return (
       <div className="event-row">
         < EventList events={this.props.events}
-         handleClick={this.selectEvent}
+         handleClick={this.props.selectEvent}
         selectedGroup={this.props.selectedGroup}
         searchTerm={this.props.searchTerm} />
-        {this.state.selectedEvent === null ? null : < EventShow selectedEvent={this.props.events.find(eventItem => eventItem.id === this.state.selectedEvent)}/>}
+        {this.props.selectedEvent === null ? null : < EventShow selectedEvent={this.props.events.find(event => event.id === this.props.selectedEvent)}/>}
       </div>
     )
   }

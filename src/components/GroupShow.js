@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom'
 export default class GroupShow extends React.Component {
 
   state = {
-    selectedEvent: null,
-    showEvent: false
+    selectedEvent: this.props.selectedGroup.events[0].id,
+    showEvent: true
   }
 
   handleClick = (id) => {
