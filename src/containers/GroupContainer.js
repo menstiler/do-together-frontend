@@ -1,6 +1,5 @@
 import React from 'react'
 import GroupCard from '../components/GroupCard'
-import { Link } from 'react-router-dom'
 
 export default class GroupContainer extends React.Component {
   renderGroupCards = () => {

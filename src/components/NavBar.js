@@ -10,7 +10,7 @@ function NavBar(props) {
           <i className="lemon outline icon"></i>
           Do Together
         </div>
-        <Link to="/" className="item " >
+        <Link to="/" className="item" >
         <i className="home icon"></i>
         Home</Link>
 

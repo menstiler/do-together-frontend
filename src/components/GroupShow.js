@@ -1,6 +1,5 @@
 import React from 'react'
 import EventList from '../containers/EventList'
-import EventForm from './EventForm'
 import EventShow from '../components/EventShow'
 import { Link } from 'react-router-dom'
 
@@ -25,7 +24,7 @@ export default class GroupShow extends React.Component {
   }
 
   render() {
-    const { name, users, activities, events, id, creator } = this.props.selectedGroup
+    const { name, users, events, id, creator } = this.props.selectedGroup
     console.log(users)
 
     return (

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Route, Switch, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 class LoginForm extends React.Component {
   state = {
@@ -48,7 +48,8 @@ class LoginForm extends React.Component {
 
   render() {
     return (
-      <>
+      <div style={{padding: "1%"}}>
+        <h2>Login</h2>
         {this.state.messages ? (
           <div class="ui error message">
             <i class="close icon" onClick={this.closeMessage}></i>
@@ -57,22 +58,22 @@ class LoginForm extends React.Component {
         ) : null}
         <div className="center-form">
           <form className="auth-form" onSubmit={this.handleSubmit}>
-            <div class="ui placeholder segment">
-              <div class="ui two column very relaxed stackable grid">
-                <div class="column">
-                  <div class="ui form">
-                    <div class="field">
+            <div className="ui placeholder segment">
+              <div className="ui two column very relaxed stackable grid">
+                <div className="column">
+                  <div className="ui form">
+                    <div className="field">
                       <label>Username</label>
-                      <div class="ui left icon input">
+                      <div className="ui left icon input">
                         <input name="username" value={this.state.username} onChange={this.handleChange} placeholder="username" />
-                        <i class="user icon"></i>
+                        <i className="user icon"></i>
                       </div>
                     </div>
-                    <div class="field">
+                    <div className="field">
                       <label>Password</label>
-                      <div class="ui left icon input">
+                      <div className="ui left icon input">
                         <input name="password" value={this.state.password} type="password" onChange={this.handleChange} placeholder="password" />
-                        <i class="lock icon"></i>
+                        <i className="lock icon"></i>
                       </div>
                     </div>
                     <div>
@@ -82,19 +83,19 @@ class LoginForm extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div class="middle aligned column">
-                  <div class="ui big button">
+                <div className="middle aligned column">
+                  <div className="ui big button">
                     <Link to="/signup" style={{color: "black"}}>
-                    <i class="signup icon"></i>
+                    <i className="signup icon"></i>
                     Sign Up</Link>
                   </div>
                 </div>
               </div>
-              <div class="ui vertical divider">Or</div>
+              <div className="ui vertical divider">Or</div>
             </div>
           </form>
         </div>
-      </>
+      </div>
     )
   }
 }
