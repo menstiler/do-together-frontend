@@ -11,23 +11,27 @@ function NavBar(props) {
           <i className="lemon outline icon"></i>
           Do Together
         </div>
-       <Link to="/" ><a className="item">
-          <i className="home icon"></i>
-          Home
+        <Link to="/" ><a className="item ">
+        <i className="home icon"></i>
+        Home
         </a></Link>
+
         {
           props.currentUser !== null ?
+          <>
           <Link to="/profile" ><a className="item">
             <i className="user icon"></i>
             Profile
           </a></Link>
+          <Link to="/group_form" ><a className="item">
+            <i className="users icon"></i>
+            Create New Group
+          </a></Link>
+          </>
         :
         null
         }
-        <Link to="/group_form" ><a className="item">
-          <i className="users icon"></i>
-          Create New Group
-        </a></Link>
+
         {
           props.currentUser !== null ?
         <a className="item right" onClick={props.logout}>
