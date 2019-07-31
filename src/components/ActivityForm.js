@@ -35,7 +35,7 @@ export default class ActivityForm extends React.Component {
           <h3>Choose Category:</h3>
               <select class="ui compact menu" name="icon" value={this.state.icon} onChange={this.handleChange}>
                 <option class="item" value="">Choose a Category:</option>
-                <option class="item" value="baseball">Sport</option>
+                <option class="item" value="basketball ball">Sport</option>
                 <option class="item" value="utensils">Food</option>
                 <option class="item" value="plane">Travel</option>
                 <option class="item" value="laptop">Tech</option>

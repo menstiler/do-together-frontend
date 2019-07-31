@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 export default class GroupCard extends React.Component {
 
   render() {
-    const { name, users, id, creator } = this.props.group
+    const { name, users, id, creator, description } = this.props.group
 
     return (
         <Link to={`/groups/${id}`} className="card" >
@@ -14,7 +14,7 @@ export default class GroupCard extends React.Component {
               <span className="date">Created By {creator}</span>
             </div>
             <div className="description">
-              Group Description...
+              {description}
             </div>
           </div>
           <div className="extra content">

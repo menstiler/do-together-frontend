@@ -61,9 +61,14 @@ code {
 }
 
 #login {
-  
+
 }
 
 #profile, #event-card, #group-show, #add-users, #new-event {
   padding: 1%;
+}
+
+.landing {
+  color: blue;
+  font-size: 10000px;
 }
