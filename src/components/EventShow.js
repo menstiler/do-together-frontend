@@ -24,8 +24,7 @@ export default class EventShow extends React.Component {
       <div id="event-details">
         <div className="ui card">
           <div class="content">
-          <img src={`/images/${activity.image}.jpeg`} />
-            <div class="header">{this.props.parent === 'groupShow' ? null : <h3>{name}</h3>}</div>
+            <h3>{name}</h3>
             <div class="meta">
               <span class="category">{this.props.parent === 'groupShow' ? null : <h4>{group.name}</h4>}</span>
             </div>

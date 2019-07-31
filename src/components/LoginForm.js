@@ -46,9 +46,16 @@ class LoginForm extends React.Component {
       })
   }
 
+  renderLemon = () => {
+    return (
+      <i className="lemon icon landing"></i>
+    )
+  }
+
   render() {
     return (
       <div style={{padding: "1%"}}>
+        {this.renderLemon()}
         <h2>Login</h2>
         {this.state.messages ? (
           <div class="ui error message">
