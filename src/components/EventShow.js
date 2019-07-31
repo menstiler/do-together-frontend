@@ -17,8 +17,14 @@ export default class EventShow extends React.Component {
     })
   }
 
+  cancelAttendee = (event_id, user, group_id) => {
+    debugger
+    let foundAttendee = this.props.selectedEvent.attendees.find(attendee => attendee.user_id === user.id && attendee.event_id ===  event_id)
+    this.props.cancelAttendee(event_id, foundAttendee, group_id)
+  }
+
   render() {
-    const { name, group, time, activity, creator, id } = this.props.selectedEvent
+    const { name, group, time, activity, creator, id, attendees } = this.props.selectedEvent
     return (
       <div id="event-details">
         <div className="ui card">
@@ -35,6 +41,34 @@ export default class EventShow extends React.Component {
               <p>{activity.location}</p>
             </div>
           </div>
+          {
+            this.props.parent === 'groupShow'
+            &&
+            this.props.currentUser !== null
+            &&
+            this.props.group.users.map(user => user.id).includes(this.props.currentUser.id)
+            &&
+            !attendees.map(user => user.user_id).includes(this.props.currentUser.id)
+            ?
+            <div class="extra content">
+              <button class="ui button" onClick={() => this.props.newAttendee(id, this.props.currentUser, group.id)}>RSVP</button>
+            </div>
+            :
+            null
+          }
+          {
+            this.props.parent === 'groupShow'
+            &&
+            this.props.currentUser !== null
+            &&
+            attendees.map(user => user.user_id).includes(this.props.currentUser.id)
+            ?
+            <div class="extra content">
+              <button class="ui button" onClick={() => this.cancelAttendee(id, this.props.currentUser, group.id)}>Cancel RSVP</button>
+            </div>
+            :
+            null
+          }
           {
             this.props.parent === 'groupShow'
             && this.props.group.users.map(user => user.id).includes(this.props.currentUser.id)

@@ -20,6 +20,56 @@ class App extends React.Component {
     activities: []
   }
 
+  cancelAttendee = (event_id, attendee, group_id) => {
+    debugger
+      fetch(`http://localhost:3000/attendees/${attendee.id}`, {
+        method: "DELETE"
+      })
+      let updatedGroups = [...this.state.groups].map(group => {
+        if (group.id !== group_id) {
+          return group
+        } else {
+          const updateEvents = group.events.find(event => event.id === event_id)
+          const oldAttendeeIndex = updateEvents.attendees.findIndex(oldAttendee => oldAttendee.id === attendee.id)
+          updateEvents.attendees.splice(oldAttendeeIndex, 1)
+          return group
+        }
+      })
+      this.setState({
+        groups: updatedGroups,
+      })
+  }
+
+  newAttendee = (event_id, user, group_id) => {
+    console.log('hi');
+    fetch('http://localhost:3000/attendees', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        user_id: user.id,
+        event_id: event_id
+      })
+    })
+    .then(resp => resp.json())
+    .then(json => {
+      console.log(json);
+      let updatedGroups = this.state.groups.map(group => {
+        if (group.id === group_id) {
+          group.events.find(event => event.id === event_id).attendees.push({id: json.id, user_id: json.user.id, event_id: json.event.id})
+          return group
+        } else {
+          return group
+        }
+      })
+      this.setState({
+        groups: updatedGroups
+      })
+   })
+  }
+
     setUser = (response) => {
      this.setState({
        currentUser: response.user
@@ -223,8 +273,6 @@ class App extends React.Component {
   }
 
   removeEvent = (event, event_id, group_id) => {
-    console.log('hey');
-    debugger;
     event.preventDefault()
       fetch(`http://localhost:3000/events/${event_id}`, {
         method: "DELETE"
@@ -238,13 +286,9 @@ class App extends React.Component {
           return group
         }
       })
-      // .filter(function( element ) {
-      //   return element !== undefined;
-      // })
       this.setState({
         groups: updatedGroups,
       })
-      // , () => this.props.history.push('/groups'))
   }
 
   addNewEvent = (event, name, time, group_id, activity_id, creator, img_url) => {
@@ -327,6 +371,8 @@ class App extends React.Component {
               showActivityForm={this.state.showActivityForm}
               activities={this.state.activities}
               removeEvent={this.removeEvent}
+              newAttendee={this.newAttendee}
+              cancelAttendee={this.cancelAttendee}
               />
             ) }}/>
         </Switch>

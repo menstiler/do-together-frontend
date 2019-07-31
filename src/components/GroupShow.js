@@ -33,7 +33,6 @@ export default class GroupShow extends React.Component {
 
   render() {
     const { name, users, events, id, creator } = this.props.selectedGroup
-    console.log(users)
 
     return (
       <div id="group-show">
@@ -70,7 +69,7 @@ export default class GroupShow extends React.Component {
           <div className="event-row">
             < EventList key={id} events={events} parent="groupShow" handleClick={this.handleClick} searchTerm={this.props.searchTerm} />
             {
-              this.state.showEvent && this.state.selectedEvent !== null ? < EventShow parent="groupShow" currentUser={this.props.currentUser} group={this.props.selectedGroup} removeEvent={this.removeEvent} selectedEvent={events.find(event => event.id === this.state.selectedEvent)}/> : null
+              this.state.showEvent && this.state.selectedEvent !== null ? < EventShow parent="groupShow" newAttendee={this.props.newAttendee} currentUser={this.props.currentUser} group={this.props.selectedGroup} removeEvent={this.removeEvent} selectedEvent={events.find(event => event.id === this.state.selectedEvent)} cancelAttendee={this.props.cancelAttendee}/> : null
             }
           </div>
         </div>

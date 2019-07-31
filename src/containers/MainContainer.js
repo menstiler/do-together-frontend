@@ -73,6 +73,8 @@ export default class MainContainer extends React.Component {
                 searchTerm={this.props.searchTerm}
                 newEvent={this.state.newEvent}
                 removeEvent={this.props.removeEvent}
+                newAttendee={this.props.newAttendee}
+                cancelAttendee={this.props.cancelAttendee}
                 />
               )
             } else {
