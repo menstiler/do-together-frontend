@@ -10,6 +10,14 @@ export default class GroupShow extends React.Component {
     showEvent: true
   }
 
+  removeEvent = (event, event_id, group_id) => {
+    console.log("I made it");
+    this.setState({
+      showEvent: false
+    })
+    this.props.removeEvent(event, event_id, group_id)
+  }
+
   handleClick = (id) => {
     if (id === this.state.selectedEvent) {
       this.setState({
@@ -62,7 +70,7 @@ export default class GroupShow extends React.Component {
           <div className="event-row">
             < EventList key={id} events={events} parent="groupShow" handleClick={this.handleClick} searchTerm={this.props.searchTerm} />
             {
-              this.state.showEvent && this.state.selectedEvent !== null ? < EventShow parent="groupShow" selectedEvent={events.find(event => event.id === this.state.selectedEvent)}/> : null
+              this.state.showEvent && this.state.selectedEvent !== null ? < EventShow parent="groupShow" currentUser={this.props.currentUser} group={this.props.selectedGroup} removeEvent={this.removeEvent} selectedEvent={events.find(event => event.id === this.state.selectedEvent)}/> : null
             }
           </div>
         </div>

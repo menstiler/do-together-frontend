@@ -84,11 +84,12 @@ class LoginForm extends React.Component {
                   </div>
                 </div>
                 <div className="middle aligned column">
+                <Link to="/signup" style={{color: "black"}}>
                   <div className="ui big button">
-                    <Link to="/signup" style={{color: "black"}}>
                     <i className="signup icon"></i>
-                    Sign Up</Link>
+                    Sign Up
                   </div>
+                  </Link>
                 </div>
               </div>
               <div className="ui vertical divider">Or</div>

@@ -176,6 +176,7 @@ class App extends React.Component {
   }
 
   removeGroup = (group_id) => {
+
     this.setState({
       selectedGroup: null
     }, () => {
@@ -221,8 +222,32 @@ class App extends React.Component {
     })
   }
 
-  addNewEvent = (event, name, time, group_id, activity_id, img_url) => {
-    debugger
+  removeEvent = (event, event_id, group_id) => {
+    console.log('hey');
+    debugger;
+    event.preventDefault()
+      fetch(`http://localhost:3000/events/${event_id}`, {
+        method: "DELETE"
+      })
+      let updatedGroups = [...this.state.groups].map(group => {
+        if (group.id !== group_id) {
+          return group
+        } else {
+          let foundIndex = group.events.findIndex(event => event.id === event_id)
+          group.events.splice(foundIndex, 1)
+          return group
+        }
+      })
+      // .filter(function( element ) {
+      //   return element !== undefined;
+      // })
+      this.setState({
+        groups: updatedGroups,
+      })
+      // , () => this.props.history.push('/groups'))
+  }
+
+  addNewEvent = (event, name, time, group_id, activity_id, creator, img_url) => {
     event.preventDefault()
     this.setState({
       newEvent: false
@@ -238,7 +263,8 @@ class App extends React.Component {
         name: name,
         time: time,
         group_id: group_id,
-        activity_id: activity_id
+        activity_id: activity_id,
+        creator: creator
       })
     })
     .then(res => res.json())
@@ -300,6 +326,7 @@ class App extends React.Component {
               hideNewActivityForm={this.hideNewActivityForm}
               showActivityForm={this.state.showActivityForm}
               activities={this.state.activities}
+              removeEvent={this.removeEvent}
               />
             ) }}/>
         </Switch>

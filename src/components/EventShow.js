@@ -18,8 +18,7 @@ export default class EventShow extends React.Component {
   }
 
   render() {
-    const { name, group, time, activity, creator } = this.props.selectedEvent
-
+    const { name, group, time, activity, creator, id } = this.props.selectedEvent
     return (
       <div id="event-details">
         <div className="ui card">
@@ -36,6 +35,18 @@ export default class EventShow extends React.Component {
               <p>{activity.location}</p>
             </div>
           </div>
+          {
+            this.props.parent === 'groupShow'
+            && this.props.group.users.map(user => user.id).includes(this.props.currentUser.id)
+            && this.props.currentUser.name === creator
+            ?
+            <div class="ui bottom attached button" onClick={(event) => this.props.removeEvent(event, id, group.id)}>
+              <i class="close icon"></i>
+              Delete Event
+            </div>
+            :
+            null
+          }
         </div>
       </div>
     )

@@ -30,6 +30,7 @@ class Profile extends React.Component {
   }
 
   render() {
+    debugger
     return (
       <div id="profile">
         <div className="ui card">
@@ -52,15 +53,17 @@ class Profile extends React.Component {
            </div>
          }
         <h3 className="headers">Upcoming Events</h3>
-        {this.state.events.length > 0 ?
-        < EventContainer events={this.state.events}
-        searchTerm=""
-        selectedEvent={this.state.selectedEvent}
-        selectEvent={this.selectEvent}/>
-        :
-        <div className="centerItem">
-        "You have no upcoming events"
-        </div>}
+        {
+          this.state.events.length < 1 ?
+          <div className="centerItem">
+            You have no upcoming events
+          </div>
+          :
+          < EventContainer events={this.state.events}
+          searchTerm=""
+          selectedEvent={this.state.selectedEvent}
+          selectEvent={this.selectEvent}/>
+      }
       </div>
     )
   }
