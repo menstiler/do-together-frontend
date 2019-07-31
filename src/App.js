@@ -21,7 +21,7 @@ class App extends React.Component {
   }
 
   cancelAttendee = (event_id, attendee, group_id) => {
-    debugger
+    // debugger
       fetch(`http://localhost:3000/attendees/${attendee.id}`, {
         method: "DELETE"
       })
@@ -41,7 +41,6 @@ class App extends React.Component {
   }
 
   newAttendee = (event_id, user, group_id) => {
-    console.log('hi');
     fetch('http://localhost:3000/attendees', {
       method: "POST",
       headers: {
@@ -89,11 +88,12 @@ class App extends React.Component {
   }
 
    logout = () => {
+     debugger
+     this.props.history.push("/login")
      this.setState({
        currentUser: null
      }, () => {
        localStorage.removeItem("token")
-       this.props.history.push("/login")
      })
    }
 
@@ -111,7 +111,6 @@ class App extends React.Component {
 
   componentDidMount() {
     const token = localStorage.token
-    // localStorage.user_id = 1
     if (token) {
       fetch(API + "/auto_login", {
         headers: {
@@ -158,11 +157,11 @@ class App extends React.Component {
   }
 
   logout = () => {
+    this.props.history.push("/login")
     this.setState({
       currentUser: null
     }, () => {
       localStorage.removeItem("token")
-      this.props.history.push("/login")
     })
   }
 
