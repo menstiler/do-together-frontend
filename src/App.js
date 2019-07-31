@@ -20,6 +20,55 @@ class App extends React.Component {
     activities: []
   }
 
+  cancelAttendee = (event_id, attendee, group_id) => {
+    // debugger
+      fetch(`http://localhost:3000/attendees/${attendee.id}`, {
+        method: "DELETE"
+      })
+      let updatedGroups = [...this.state.groups].map(group => {
+        if (group.id !== group_id) {
+          return group
+        } else {
+          const updateEvents = group.events.find(event => event.id === event_id)
+          const oldAttendeeIndex = updateEvents.attendees.findIndex(oldAttendee => oldAttendee.id === attendee.id)
+          updateEvents.attendees.splice(oldAttendeeIndex, 1)
+          return group
+        }
+      })
+      this.setState({
+        groups: updatedGroups,
+      })
+  }
+
+  newAttendee = (event_id, user, group_id) => {
+    fetch('http://localhost:3000/attendees', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        user_id: user.id,
+        event_id: event_id
+      })
+    })
+    .then(resp => resp.json())
+    .then(json => {
+      console.log(json);
+      let updatedGroups = this.state.groups.map(group => {
+        if (group.id === group_id) {
+          group.events.find(event => event.id === event_id).attendees.push({id: json.id, user_id: json.user.id, event_id: json.event.id})
+          return group
+        } else {
+          return group
+        }
+      })
+      this.setState({
+        groups: updatedGroups
+      })
+   })
+  }
+
     setUser = (response) => {
      this.setState({
        currentUser: response.user
@@ -39,11 +88,12 @@ class App extends React.Component {
   }
 
    logout = () => {
+     debugger
+     this.props.history.push("/login")
      this.setState({
        currentUser: null
      }, () => {
        localStorage.removeItem("token")
-       this.props.history.push("/login")
      })
    }
 
@@ -61,7 +111,6 @@ class App extends React.Component {
 
   componentDidMount() {
     const token = localStorage.token
-    // localStorage.user_id = 1
     if (token) {
       fetch(API + "/auto_login", {
         headers: {
@@ -108,11 +157,11 @@ class App extends React.Component {
   }
 
   logout = () => {
+    this.props.history.push("/login")
     this.setState({
       currentUser: null
     }, () => {
       localStorage.removeItem("token")
-      this.props.history.push("/login")
     })
   }
 
@@ -176,6 +225,7 @@ class App extends React.Component {
   }
 
   removeGroup = (group_id) => {
+
     this.setState({
       selectedGroup: null
     }, () => {
@@ -221,8 +271,26 @@ class App extends React.Component {
     })
   }
 
-  addNewEvent = (event, name, time, group_id, activity_id, img_url) => {
-    debugger
+  removeEvent = (event, event_id, group_id) => {
+    event.preventDefault()
+      fetch(`http://localhost:3000/events/${event_id}`, {
+        method: "DELETE"
+      })
+      let updatedGroups = [...this.state.groups].map(group => {
+        if (group.id !== group_id) {
+          return group
+        } else {
+          let foundIndex = group.events.findIndex(event => event.id === event_id)
+          group.events.splice(foundIndex, 1)
+          return group
+        }
+      })
+      this.setState({
+        groups: updatedGroups,
+      })
+  }
+
+  addNewEvent = (event, name, time, group_id, activity_id, creator, img_url) => {
     event.preventDefault()
     this.setState({
       newEvent: false
@@ -238,7 +306,8 @@ class App extends React.Component {
         name: name,
         time: time,
         group_id: group_id,
-        activity_id: activity_id
+        activity_id: activity_id,
+        creator: creator
       })
     })
     .then(res => res.json())
@@ -300,6 +369,9 @@ class App extends React.Component {
               hideNewActivityForm={this.hideNewActivityForm}
               showActivityForm={this.state.showActivityForm}
               activities={this.state.activities}
+              removeEvent={this.removeEvent}
+              newAttendee={this.newAttendee}
+              cancelAttendee={this.cancelAttendee}
               />
             ) }}/>
         </Switch>

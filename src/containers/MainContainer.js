@@ -72,6 +72,9 @@ export default class MainContainer extends React.Component {
                 passUsers={this.passUsers}
                 searchTerm={this.props.searchTerm}
                 newEvent={this.state.newEvent}
+                removeEvent={this.props.removeEvent}
+                newAttendee={this.props.newAttendee}
+                cancelAttendee={this.props.cancelAttendee}
                 />
               )
             } else {
@@ -103,6 +106,7 @@ export default class MainContainer extends React.Component {
               addNewEvent={this.props.addNewEvent}
               events={this.removeDuplicates(this.props.groups.map(group => group.events).flat(), "id")}
               activities={this.props.activities}
+              currentUser={this.props.currentUser}
               />)
             }} />
           <Route path="/events" render={() => {

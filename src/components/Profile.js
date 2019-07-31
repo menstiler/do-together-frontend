@@ -6,6 +6,7 @@ class Profile extends React.Component {
 
   state = {
     events: [],
+    attendees: [],
     groups: [],
     file: null,
     selectedEvent: null
@@ -23,13 +24,15 @@ class Profile extends React.Component {
     .then(user => {
       this.setState({
         events: user.events,
+        attendees: user.attendees,
         groups: user.groups,
-        selectedEvent: user.events.length > 0 ? user.events[0].id : null
+        selectedEvent: user.attendees.length > 0 ? user.attendees[0].event.id : null
       })
     })
   }
 
   render() {
+    debugger
     return (
       <div id="profile">
         <div className="ui card">
@@ -45,22 +48,26 @@ class Profile extends React.Component {
            currentUser={this.props.currentUser}
            addUser={this.props.addUser}
            addGroup={this.props.addGroup}
-           searchTerm="" />
+           searchTerm=""
+           />
            :
            <div className="centerItem">
            <Link to="/groups" ><button className="ui primary button">Join a Group</button></Link>
            </div>
          }
         <h3 className="headers">Upcoming Events</h3>
-        {this.state.events.length > 0 ?
-        < EventContainer events={this.state.events}
-        searchTerm=""
-        selectedEvent={this.state.selectedEvent}
-        selectEvent={this.selectEvent}/>
-        :
-        <div className="centerItem">
-        "You have no upcoming events"
-        </div>}
+        {
+          this.state.attendees.length < 1 ?
+          <div className="centerItem">
+            You have no upcoming events
+          </div>
+          :
+          < EventContainer events={this.state.events.filter(event => this.state.attendees.map(attendee => attendee.event.id).includes(event.id))}
+          searchTerm=""
+          selectedEvent={this.state.selectedEvent}
+          selectEvent={this.selectEvent}
+          />
+      }
       </div>
     )
   }

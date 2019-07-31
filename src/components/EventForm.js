@@ -80,7 +80,7 @@ export default class EventForm extends React.Component {
     return (
       <div id="new-event">
         <h2>Create New Event</h2>
-        <form onSubmit={(event) => this.props.addNewEvent(event, name, time, group_id, activity_id, img_url)}>
+        <form onSubmit={(event) => this.props.addNewEvent(event, name, time, group_id, activity_id, this.props.currentUser.name, img_url)}>
           <h3>Activities:</h3>
           <div className="ui cards">
             {this.renderActivities()}
