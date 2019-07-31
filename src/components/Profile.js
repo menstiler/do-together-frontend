@@ -32,7 +32,6 @@ class Profile extends React.Component {
   }
 
   render() {
-    debugger
     return (
       <div id="profile">
         <div className="ui card">

@@ -21,15 +21,15 @@ export default class EventShow extends React.Component {
     console.log(id)
     console.log(group)
     console.log(attendees)
-    debugger
     if (this.props.parent === 'groupShow' && this.props.currentUser !== null) {
-      debugger
       if (this.props.group.users.map(user => user.id).includes(this.props.currentUser.id) && !attendees.map(user => user.user_id).includes(this.props.currentUser.id)) {
         return (
           <div class="extra content">
             <button class="ui button" onClick={() => this.props.newAttendee(id, this.props.currentUser, group.id)}>RSVP</button>
           </div>
         )
+      } else if (!this.props.group.users.map(user => user.id).includes(this.props.currentUser.id)) {
+        return null
       } else {
         return (
           <div class="extra content">

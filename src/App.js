@@ -21,7 +21,6 @@ class App extends React.Component {
   }
 
   cancelAttendee = (event_id, attendee, group_id) => {
-    // debugger
       fetch(`http://localhost:3000/attendees/${attendee.id}`, {
         method: "DELETE"
       })
@@ -88,7 +87,6 @@ class App extends React.Component {
   }
 
    logout = () => {
-     debugger
      this.props.history.push("/login")
      this.setState({
        currentUser: null
@@ -206,11 +204,34 @@ class App extends React.Component {
     fetch(`http://localhost:3000/groups/${group_id}/remove_user/${user_id}`, {
       method: "DELETE"
     })
-    console.log(group_id)
-    this.state.groups.find(group => group.id === group_id).users.splice(this.state.groups.find(group => group.id === group_id).users.findIndex(user => user.id === this.state.currentUser.id),1)
-    let updatedGroups = this.state.groups
-    this.setState({
-      groups: updatedGroups
+    .then(resp => resp.json())
+    .then(json  => {
+    let hellGroup = {...this.state.groups.find(group => group.id = group_id)}
+    let updatedEvents = hellGroup.events.map(event => {
+      const newEvent = {...event}
+      newEvent.attendees = newEvent.attendees.filter(attendee => attendee.user_id !== user_id)
+      return newEvent
+    })
+
+    hellGroup.events = updatedEvents
+    // let newArr = hellAttendees
+    // let removeAttendees = newArr.filter(attendee => attendee.user_id === user_id)
+    // removeAttendees.map(arg => {
+    //   let index = newArr.indexOf(arg)
+    //   newArr.splice(index, 1)
+    // })
+    hellGroup.users.splice(this.state.groups.find(group => group.id === group_id).users.findIndex(user => user.id === this.state.currentUser.id),1)
+    //   debugger
+      let updatedGroups = this.state.groups.map(group => {
+        if (group.id !== group_id) {
+          return group
+        } else {
+          return hellGroup
+        }
+      })
+      this.setState({
+        groups: updatedGroups
+      })
     })
   }
 
