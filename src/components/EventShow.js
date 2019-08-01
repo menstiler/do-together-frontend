@@ -3,24 +3,7 @@ import React from 'react'
 
 export default class EventShow extends React.Component {
 
-  state = {
-    longLat: null
-  }
-
-  // findLongLat = () => {
-  //   fetch(`https://www.mapquestapi.com/geocoding/v1/address?key=Feo2M1EQmW7gee0uAICMA44ahRGGGOF6&inFormat=kvp&outFormat=json&location=${this.props.selectedEvent.activity.location}%2C+CO&thumbMaps=false`)
-  //   .then(resp => resp.json())
-  //   .then(json => {
-  //     this.setState({
-  //       longLat: json.results[0].locations[0].displayLatLng
-  //     }, () => console.log(this.state.longLat))
-  //   })
-  // }
-
   renderButtons = (id, group, attendees) => {
-    console.log(id)
-    console.log(group)
-    console.log(attendees)
     if (this.props.parent === 'groupShow' && this.props.currentUser !== null) {
       if (this.props.group.users.map(user => user.id).includes(this.props.currentUser.id) && !attendees.map(user => user.user_id).includes(this.props.currentUser.id)) {
         return (
@@ -37,12 +20,21 @@ export default class EventShow extends React.Component {
           </div>
         )
       }
+    } else if (this.props.currentUser !== null && this.props.parent === 'profile') {
+      return (
+        <div class="extra content">
+          <button class="ui button" onClick={() => this.cancelAttendee(id, this.props.currentUser, group.id)}>Cancel RSVP</button>
+        </div>
+      )
     }
   }
 
   cancelAttendee = (event_id, user, group_id) => {
     let foundAttendee = this.props.selectedEvent.attendees.find(attendee => attendee.user_id === user.id && attendee.event_id ===  event_id)
     this.props.cancelAttendee(event_id, foundAttendee, group_id)
+    if (this.props.parent === 'profile') {
+      this.props.changeState(foundAttendee.id)
+    }
   }
 
   render() {
@@ -62,7 +54,7 @@ export default class EventShow extends React.Component {
               <p>{activity.location}</p>
             </div>
             <div>
-            { attendees.length > 0
+            { attendees.length > 0 && this.props.parent === 'groupShow'
               ?
               <h3>Attendees</h3>
               :

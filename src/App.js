@@ -35,7 +35,7 @@ class App extends React.Component {
         }
       })
       this.setState({
-        groups: updatedGroups,
+        groups: updatedGroups
       })
   }
 
@@ -103,7 +103,8 @@ class App extends React.Component {
 
   handleChange = (event) => {
     this.setState({
-      searchTerm: event.target.value
+      searchTerm: event.target.value,
+      selectedEvent: null
     })
   }
 
@@ -204,24 +205,14 @@ class App extends React.Component {
     fetch(`http://localhost:3000/groups/${group_id}/remove_user/${user_id}`, {
       method: "DELETE"
     })
-    .then(resp => resp.json())
-    .then(json  => {
-    let hellGroup = {...this.state.groups.find(group => group.id = group_id)}
+    let hellGroup = {...this.state.groups.find(group => group.id === group_id)}
     let updatedEvents = hellGroup.events.map(event => {
       const newEvent = {...event}
       newEvent.attendees = newEvent.attendees.filter(attendee => attendee.user_id !== user_id)
       return newEvent
     })
-
     hellGroup.events = updatedEvents
-    // let newArr = hellAttendees
-    // let removeAttendees = newArr.filter(attendee => attendee.user_id === user_id)
-    // removeAttendees.map(arg => {
-    //   let index = newArr.indexOf(arg)
-    //   newArr.splice(index, 1)
-    // })
     hellGroup.users.splice(this.state.groups.find(group => group.id === group_id).users.findIndex(user => user.id === this.state.currentUser.id),1)
-    //   debugger
       let updatedGroups = this.state.groups.map(group => {
         if (group.id !== group_id) {
           return group
@@ -232,7 +223,6 @@ class App extends React.Component {
       this.setState({
         groups: updatedGroups
       })
-    })
   }
 
   addGroup = (newGroup) => {
@@ -246,7 +236,6 @@ class App extends React.Component {
   }
 
   removeGroup = (group_id) => {
-
     this.setState({
       selectedGroup: null
     }, () => {
@@ -268,8 +257,6 @@ class App extends React.Component {
 
   addNewActivity = (event, title, location, icon, image, group_id) => {
     event.preventDefault()
-    // this.hideActivityForm(event)
-
     fetch('http://localhost:3000/activities', {
       method: "POST",
       headers: {
@@ -365,6 +352,7 @@ class App extends React.Component {
           <Route path="/profile" render={() => < Profile
             currentUser={this.state.currentUser}
             searchTerm={this.state.searchTerm}
+            cancelAttendee={this.cancelAttendee}
             />
           } />
           <Route path="/" render={(routerProps) => {

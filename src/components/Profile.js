@@ -12,6 +12,14 @@ class Profile extends React.Component {
     selectedEvent: null
   }
 
+  changeState = (attendee_id) => {
+    this.setState({
+      attendees: this.state.attendees.filter(attendee => attendee.id !== attendee_id),
+      selectedEvent: null
+    })
+  }
+
+
   selectEvent = (id) => {
     this.setState({
       selectedEvent: id,
@@ -61,10 +69,15 @@ class Profile extends React.Component {
             You have no upcoming events
           </div>
           :
-          < EventContainer events={this.state.events.filter(event => this.state.attendees.map(attendee => attendee.event.id).includes(event.id))}
+          < EventContainer
+          events={this.state.events.filter(event => this.state.attendees.map(attendee => attendee.event.id).includes(event.id))}
           searchTerm=""
           selectedEvent={this.state.selectedEvent}
           selectEvent={this.selectEvent}
+          currentUser={this.props.currentUser}
+          cancelAttendee={this.props.cancelAttendee}
+          changeState={this.changeState}
+          parent="profile"
           />
       }
       </div>
