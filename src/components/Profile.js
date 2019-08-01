@@ -39,6 +39,13 @@ class Profile extends React.Component {
     })
   }
 
+  deleteAccount = () => {
+    this.props.deleteUser(this.props.currentUser.id)
+    fetch(`http://localhost:3000/users/${this.props.currentUser.id}`, {
+      method: "DELETE"
+    })
+  }
+
   render() {
     return (
       <div id="profile">
@@ -80,6 +87,9 @@ class Profile extends React.Component {
           parent="profile"
           />
       }
+      <button className="negative ui button" type="submit" onClick={this.deleteAccount}>
+        Delete Account
+      </button>
       </div>
     )
   }

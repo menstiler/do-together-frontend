@@ -6,6 +6,8 @@ import MainContainer from './containers/MainContainer'
 import { Route, Switch } from 'react-router-dom'
 import SignupForm from './components/SignupForm'
 import LoginForm from './components/LoginForm'
+import Dropdown from './components/dropdown'
+
 
 const API = 'http://localhost:3000'
 
@@ -342,6 +344,21 @@ class App extends React.Component {
     })
   }
 
+  deleteUser = (user_id) => {
+    this.props.history.push("/login")
+    let updatedGroups = this.state.groups.map(group => {
+      let updatedUsers = group.users.filter(user => user.id !== user_id)
+      group.users = updatedUsers
+      return group
+    })
+    this.setState({
+      currentUser: null,
+      groups: updatedGroups
+    }, () => {
+      localStorage.removeItem("token")
+    })
+  }
+
   render() {
     return (
       <div>
@@ -353,6 +370,7 @@ class App extends React.Component {
             currentUser={this.state.currentUser}
             searchTerm={this.state.searchTerm}
             cancelAttendee={this.cancelAttendee}
+            deleteUser={this.deleteUser}
             />
           } />
           <Route path="/" render={(routerProps) => {

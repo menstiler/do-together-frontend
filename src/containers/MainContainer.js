@@ -8,7 +8,6 @@ import GroupForm from '../components/GroupForm'
 import AddUsers from '../components/AddUsers'
 import { Route, Switch, Redirect } from 'react-router-dom'
 
-
 export default class MainContainer extends React.Component {
 
   state = {

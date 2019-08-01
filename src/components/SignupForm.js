@@ -1,4 +1,10 @@
 import React from "react";
+const avators = [
+  "003-man-1.svg", "012-man-5.svg", "009-cowboy.svg", "001-woman.svg", "006-man-4.svg", "030-woman-5.svg",
+  "014-man-6.svg", "033-boy.svg", "031-student.svg", "010-cowgirl.svg", "029-man-14.svg", "015-gymnast.svg",
+  "026-man-11.svg", "021-man-8.svg", "017-hipster-1.svg", "034-girl.svg", "013-woman-2.svg",
+  "025-nerd.svg", "005-man-3.svg", "004-man-2.svg", "035-woman-6.svg", "019-man-7.svg"
+]
 
 class SignupForm extends React.Component {
   state = {
@@ -6,7 +12,8 @@ class SignupForm extends React.Component {
     username: "",
     password: "",
     passwordConfirmation: "",
-    messages: null
+    messages: null,
+    image: ""
   };
 
   handleChange = event => {
@@ -14,6 +21,12 @@ class SignupForm extends React.Component {
       [event.target.name]: event.target.value
     });
   };
+
+  handleImageChange = (image) => {
+    this.setState({
+      image: image
+    });
+  }
 
   closeMessage = () => {
     this.setState({
@@ -34,7 +47,8 @@ class SignupForm extends React.Component {
         body: JSON.stringify({
           name: this.state.displayName,
           username: this.state.username,
-          password: this.state.password
+          password: this.state.password,
+          image: this.state.image
         })
       })
         .then(res => res.json())
@@ -109,6 +123,24 @@ class SignupForm extends React.Component {
                     onChange={this.handleChange}
                     placeholder="password confirmation"
                   />
+                </div>
+
+              </div>
+
+              <div class="field">
+                <label>Choose Icon</label>
+                <div class="ui four cards">
+                {
+                  avators.map(avator => {
+                    return (
+                      <a class={this.state.image === avator ? "red card on" : "red card"} name="image" onClick={() => this.handleImageChange(avator)}>
+                        <div class="image">
+                          <img src={`/icons/${avator}`}/>
+                        </div>
+                      </a>
+                    )
+                  })
+                }
                 </div>
               </div>
             </div>

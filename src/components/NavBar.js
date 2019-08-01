@@ -17,14 +17,14 @@ function NavBar(props) {
         {
           props.currentUser !== null ?
           <>
-          <Link to="/profile" ><a className="item">
+          <Link to="/profile" className="item" >
             <i className="user icon"></i>
             Profile
-          </a></Link>
-          <Link to="/group_form" ><a className="item">
+          </Link>
+          <Link to="/group_form" className="item">
             <i className="users icon"></i>
             Create New Group
-          </a></Link>
+          </Link>
           </>
         :
         null
@@ -40,11 +40,11 @@ function NavBar(props) {
         <div className="menu right">
           <a className="item" onClick={props.login}>
             <i className="user icon icon"></i>
-            <a style={{color: "black"}}>Login</a>
+            Login
           </a>
           <a className="item" onClick={props.signup}>
             <i className="child icon icon"></i>
-            <a style={{color: "black"}}>Signup</a>
+            Signup
           </a>
         </div>
       }

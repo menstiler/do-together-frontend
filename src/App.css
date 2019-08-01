@@ -11,3 +11,15 @@
 .ui.cards>.card.user-border.on {
   border: solid 3px green
 }
+
+.ui.four.cards>.card {
+  width: calc(12% - 1.5em)
+}
+
+.red.card.on {
+  border: 2px solid green
+}
+
+.ui.cards {
+  margin: 0
+}
