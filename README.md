@@ -1,6 +1,6 @@
 # Do Together
 
-An app that allows users to plan and join groups events, do something that interest you and forge new or solidify old relationships. Life is so much better when doing something together.
+An app that allows users to plan and join groups events, do something that interests you and forge new or solidify old relationships. Life is so much better when doing something together.
 
 ### User Stories
 - Join a group
