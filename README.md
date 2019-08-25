@@ -28,4 +28,4 @@ https://github.com/menstiler/do-together-backend
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-Built by Christopher Yuan and Mendel Stillerman
+Built by [Christopher Yuan](https://github.com/chrisyuaners) and [Mendel Stillerman](https://github.com/menstiler)
