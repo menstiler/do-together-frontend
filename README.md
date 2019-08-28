@@ -16,7 +16,7 @@ An app that allows users to plan and join groups events, do something that inter
 - Semantic UI
 
 ### Demo
-Coming Soon...
+http://do-together.surge.sh/
 
 ### Resources:
 #### Backend:
